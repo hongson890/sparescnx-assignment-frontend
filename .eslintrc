@@ -1,0 +1,74 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
+  "extends": [
+    "plugin:prettier/recommended",
+    "airbnb-typescript",
+    "prettier",
+    "prettier/@typescript-eslint",
+    "prettier/react"
+  ],
+  "env": {
+    "jest": true
+  },
+  "rules": {
+    "allowPattern": 0,
+    "max-len": "off",
+    "linebreak-style": 0,
+    "no-underscore-dangle": "off",
+    "arrow-body-style": "off",
+    "comma-dangle": "off",
+    "import/no-unresolved": "off",
+    "import/no-cycle": "off",
+    "no-restricted-globals": "off",
+    "eol-last": "off",
+    "no-shadow": "off",
+    "no-unused-vars": "off",
+    "prefer-const": "off",
+    "object-curly-spacing": 2,
+    "object-curly-newline": "off",
+    "import/prefer-default-export": "off",
+    "jsx-a11y/anchor-is-valid": "off",
+    "jsx-a11y/click-events-have-key-events": "off",
+    "jsx-a11y/control-has-associated-label": "off",
+    "jsx-a11y/no-static-element-interactions": "off",
+    "no-console": "off",
+    "no-param-reassign": "off",
+    "no-plusplus": "off",
+    "react-hooks/exhaustive-deps": "off",
+    "react/forbid-prop-types": "off",
+    "react/jsx-filename-extension": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react/require-default-props": "off",
+    "react/jsx-one-expression-per-line": "off",
+    "react/prop-types": "off",
+    "no-use-before-define": "off",
+    "function-call-argument-newline": "off",
+    "import/extensions": "off",
+    "react/jsx-fragments": "off",
+    "require-yield": "off",
+    "@typescript-eslint/no-use-before-define": "off",
+    "@typescript-eslint/no-unused-vars": "off",
+    "@typescript-eslint/dot-notation": "off",
+    "@typescript-eslint/no-shadow": "off",
+    "react/destructuring-assignment": "off",
+    "no-nested-ternary": "off",
+    "func-names": "off",
+    "react/no-array-index-key": "off",
+    "react/no-danger": "off",
+    "react/no-unescaped-entities": "off",
+    "prettier/prettier": ["error",{
+      "endOfLine": "auto"}
+    ]
+  },
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx", "*.js"],
+      "parserOptions": {
+        "ecmaVersion": 12,
+        "project": ["./tsconfig.json"]
+      }
+    }
+  ]
+}
