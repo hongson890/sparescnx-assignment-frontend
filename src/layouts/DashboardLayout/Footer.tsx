@@ -5,7 +5,6 @@ import logo from '../../assets/images/spares-cnx.png'
 const useStyles = makeStyles(theme => ({
   root: {
     padding: '25px 0px 25px 25px',
-    marginTop: '80px',
   },
   image: {
     height: 20,

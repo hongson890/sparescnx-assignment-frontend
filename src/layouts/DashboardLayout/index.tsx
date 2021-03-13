@@ -28,6 +28,7 @@ const useStyles = makeStyles(theme => ({
   },
   children: {
     padding: '20px 20px 0px 20px',
+    minHeight: '800px',
   },
   content: {
     flex: '1 1 auto',

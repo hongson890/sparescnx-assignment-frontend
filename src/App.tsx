@@ -12,6 +12,7 @@ import LoginLayout from './layouts/LoginLayout'
 import { UserTablePage } from './views/UserTable'
 import CreateIncidentPage from './views/Incident/CreateIncidentPage'
 import IncidentsListPage from './views/Incident/IncidentsListPage'
+import IncidentDetailPage from './views/Incident/IncidentDetailPage'
 
 export const history = createBrowserHistory()
 
@@ -24,13 +25,19 @@ const App = () => {
           <RouteWrapper
             exact
             path="/"
-            component={UserTablePage}
+            component={IncidentsListPage}
             layout={DashboardLayout}
           />
           <RouteWrapper
             exact
             path="/incident/create"
             component={CreateIncidentPage}
+            layout={DashboardLayout}
+          />
+          <RouteWrapper
+            exact
+            path="/incident/detail/:id"
+            component={IncidentDetailPage}
             layout={DashboardLayout}
           />
           <RouteWrapper
