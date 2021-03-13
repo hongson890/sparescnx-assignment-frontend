@@ -8,6 +8,8 @@ export class Incident extends CreatedAudit {
 
   type: string = IncidentType.NORMAL.value
 
+  incidentDate?: Date = new Date()
+
   description: string = ''
 
   note: string = ''

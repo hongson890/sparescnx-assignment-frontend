@@ -10,13 +10,19 @@ import {
   makeStyles,
   TextField,
 } from '@material-ui/core'
+import {
+  DateTimePicker,
+  KeyboardDatePicker,
+  MuiPickersUtilsProvider,
+} from '@material-ui/pickers'
+import DateFnsUtils from '@date-io/date-fns'
 import { Incident } from '../models/Incident'
 import { IncidentType } from '../constants/IncidentType'
 import { IncidentStatus } from '../constants/IncidentStatus'
 import { User } from '../models/User'
 import usersData from '../tests/mocks/user-datas'
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles(theme => ({
   root: {},
 }))
 
@@ -32,7 +38,14 @@ const AddIncident = () => {
     })
   }
 
-  function saveIncident() {
+  const handleChangeDate = (dateValue: any) => {
+    setValues({
+      ...values,
+      incidentDate: dateValue,
+    })
+  }
+
+  const saveIncident = () => {
     console.log(values)
   }
 
@@ -60,16 +73,6 @@ const AddIncident = () => {
             <Grid item md={6} xs={12}>
               <TextField
                 fullWidth
-                label="Description"
-                name="description"
-                onChange={handleChange}
-                value={values.description}
-                variant="outlined"
-              />
-            </Grid>
-            <Grid item md={6} xs={12}>
-              <TextField
-                fullWidth
                 label="Note"
                 name="note"
                 onChange={handleChange}
@@ -81,7 +84,7 @@ const AddIncident = () => {
               <TextField
                 fullWidth
                 label="Incident Type"
-                name="Incident Type"
+                name="type"
                 onChange={handleChange}
                 required
                 select
@@ -95,6 +98,20 @@ const AddIncident = () => {
                   </option>
                 ))}
               </TextField>
+            </Grid>
+            <Grid item md={6} xs={12}>
+              <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <DateTimePicker
+                  variant="inline"
+                  fullWidth
+                  inputVariant="outlined"
+                  ampm={false}
+                  id="date-picker-inline"
+                  label="Select Incident Date"
+                  value={values.incidentDate}
+                  onChange={handleChangeDate}
+                />
+              </MuiPickersUtilsProvider>
             </Grid>
             <Grid item md={6} xs={12}>
               <TextField
@@ -139,6 +156,18 @@ const AddIncident = () => {
                   </option>
                 ))}
               </TextField>
+            </Grid>
+            <Grid item md={12} xs={12}>
+              <TextField
+                fullWidth
+                multiline
+                rows={5}
+                label="Description"
+                name="description"
+                onChange={handleChange}
+                value={values.description}
+                variant="outlined"
+              />
             </Grid>
           </Grid>
         </CardContent>
