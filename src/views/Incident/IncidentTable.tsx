@@ -100,8 +100,9 @@ const IncidentTable = ({ incidents, ...rest }: IncidentTableProps) => {
                   />
                 </TableCell>
                 <TableCell>Name</TableCell>
-                <TableCell>Note</TableCell>
-                <TableCell>Description</TableCell>
+                <TableCell>Assignee</TableCell>
+                <TableCell>Incident Type</TableCell>
+                <TableCell>Incident Status</TableCell>
                 <TableCell>Created By</TableCell>
                 <TableCell>Created At</TableCell>
               </TableRow>
@@ -121,8 +122,9 @@ const IncidentTable = ({ incidents, ...rest }: IncidentTableProps) => {
                     />
                   </TableCell>
                   <TableCell>{incident.name}</TableCell>
-                  <TableCell>{incident.note}</TableCell>
-                  <TableCell>{incident.description}</TableCell>
+                  <TableCell>{incident.userId}</TableCell>
+                  <TableCell>{incident.type}</TableCell>
+                  <TableCell>{incident.status}</TableCell>
                   <TableCell>{incident.createdBy}</TableCell>
                   <TableCell>{incident.createdAt.toString()}</TableCell>
                 </TableRow>

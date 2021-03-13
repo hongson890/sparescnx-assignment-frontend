@@ -14,9 +14,17 @@ const useStyles = makeStyles(theme => ({
     marginRight: theme.spacing(2),
   },
   deleteBtn: {
+    marginRight: theme.spacing(2),
     backgroundColor: theme.palette.error.main,
     '&:hover': {
       backgroundColor: theme.palette.error.dark,
+    },
+    color: theme.palette.error.contrastText,
+  },
+  assignBtn: {
+    backgroundColor: theme.palette.info.main,
+    '&:hover': {
+      backgroundColor: theme.palette.info.dark,
     },
     color: theme.palette.error.contrastText,
   },
@@ -47,6 +55,13 @@ const IncidentsListPage = () => {
           onClick={deleteIncident}
         >
           Delete incident
+        </Button>
+        <Button
+          className={classes.assignBtn}
+          variant="contained"
+          onClick={deleteIncident}
+        >
+          Assign incident
         </Button>
       </Box>
       <Box mt={3}>
