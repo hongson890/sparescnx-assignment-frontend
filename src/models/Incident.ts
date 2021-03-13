@@ -4,6 +4,8 @@ import { IncidentStatus } from '../constants/IncidentStatus'
 import { IncidentType } from '../constants/IncidentType'
 
 export class Incident extends CreatedAudit {
+  id: string = ''
+
   name: string = ''
 
   type: string = IncidentType.NORMAL.value

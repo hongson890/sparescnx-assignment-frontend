@@ -17,7 +17,7 @@ import NavItem from './NavItem'
 
 const items = [
   {
-    href: '/incident',
+    href: '/incident/list',
     icon: home,
     title: 'Incidents',
     active: true,

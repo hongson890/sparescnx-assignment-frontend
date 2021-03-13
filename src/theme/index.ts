@@ -10,11 +10,14 @@ const theme = createMuiTheme({
       main: 'rgba(1,95,149,0.9)',
     },
     secondary: {
-      main: colors.indigo[500],
+      main: 'rgba(1,95,149,0.9)',
     },
     text: {
       primary: colors.blueGrey[900],
       secondary: colors.blueGrey[600],
+    },
+    error: {
+      main: 'rgb(220, 0, 78)',
     },
   },
   typography: {

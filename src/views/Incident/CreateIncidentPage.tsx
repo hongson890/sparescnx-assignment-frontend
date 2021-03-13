@@ -16,17 +16,17 @@ import {
   MuiPickersUtilsProvider,
 } from '@material-ui/pickers'
 import DateFnsUtils from '@date-io/date-fns'
-import { Incident } from '../models/Incident'
-import { IncidentType } from '../constants/IncidentType'
-import { IncidentStatus } from '../constants/IncidentStatus'
-import { User } from '../models/User'
-import usersData from '../tests/mocks/user-datas'
+import { Incident } from '../../models/Incident'
+import { IncidentType } from '../../constants/IncidentType'
+import { IncidentStatus } from '../../constants/IncidentStatus'
+import { User } from '../../models/User'
+import usersData from '../../tests/mocks/user-datas'
 
 const useStyles = makeStyles(theme => ({
   root: {},
 }))
 
-const AddIncident = () => {
+const CreateIncidentPage = () => {
   const classes = useStyles()
   const [values, setValues] = useState(new Incident())
   const [users, setUsers] = useState<User[]>(usersData)
@@ -182,4 +182,4 @@ const AddIncident = () => {
   )
 }
 
-export default AddIncident
+export default CreateIncidentPage

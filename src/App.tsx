@@ -10,7 +10,8 @@ import { RouteWrapper } from './components/RouteWrapper'
 import { LoginPage } from './views/LoginPage'
 import LoginLayout from './layouts/LoginLayout'
 import { UserTablePage } from './views/UserTable'
-import AddIncident from './views/AddIncident'
+import CreateIncidentPage from './views/Incident/CreateIncidentPage'
+import IncidentsListPage from './views/Incident/IncidentsListPage'
 
 export const history = createBrowserHistory()
 
@@ -28,8 +29,14 @@ const App = () => {
           />
           <RouteWrapper
             exact
-            path="/add-incident"
-            component={AddIncident}
+            path="/incident/create"
+            component={CreateIncidentPage}
+            layout={DashboardLayout}
+          />
+          <RouteWrapper
+            exact
+            path="/incident/list"
+            component={IncidentsListPage}
             layout={DashboardLayout}
           />
           <RouteWrapper
