@@ -139,7 +139,7 @@ const NavBar = ({ open, setOpen }: NavBarProps) => {
         p={2}
       >
         <Avatar className={classes.avatar} component={RouterLink} to="/">
-          RF
+          SP
         </Avatar>
       </Box>
       <Box className={classes.listItem} flexDirection="column">

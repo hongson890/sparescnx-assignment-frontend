@@ -26,6 +26,9 @@ const useStyles = makeStyles(theme => ({
     flex: '1 1 auto',
     overflow: 'hidden',
   },
+  children: {
+    padding: '20px 20px 0px 20px',
+  },
   content: {
     flex: '1 1 auto',
     height: '100%',
@@ -55,7 +58,7 @@ const DashboardLayout = ({ children }: DashboardLayoutProps) => {
         <div className={classes.contentContainer}>
           <div className={classes.content}>
             <Header path={children.props.match.path.replace('/', '')} />
-            {children}
+            <div className={classes.children}>{children}</div>
             <Footer />
           </div>
         </div>
