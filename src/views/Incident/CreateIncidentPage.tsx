@@ -15,6 +15,8 @@ import {
   KeyboardDatePicker,
   MuiPickersUtilsProvider,
 } from '@material-ui/pickers'
+import * as Yup from 'yup'
+import { useFormik } from 'formik'
 import DateFnsUtils from '@date-io/date-fns'
 import { Incident } from '../../models/Incident'
 import { IncidentType } from '../../constants/IncidentType'
@@ -28,25 +30,23 @@ const useStyles = makeStyles(theme => ({
 
 const CreateIncidentPage = () => {
   const classes = useStyles()
-  const [values, setValues] = useState(new Incident())
+  const [incident, setIncident] = useState(new Incident())
   const [users, setUsers] = useState<User[]>(usersData)
-
-  const handleChange = (event: any) => {
-    setValues({
-      ...values,
-      [event.target.name]: event.target.value,
-    })
-  }
-
-  const handleChangeDate = (dateValue: any) => {
-    setValues({
-      ...values,
-      incidentDate: dateValue,
-    })
-  }
+  const formik = useFormik({
+    initialValues: new Incident(),
+    validationSchema: Yup.object().shape({
+      name: Yup.string().max(255).required('Name is required'),
+      date: Yup.date().required('Incident date is required'),
+      userId: Yup.number().integer().min(0).required('User is required'),
+    }),
+    onSubmit: values => {
+      console.log(values)
+    },
+  })
 
   const saveIncident = () => {
-    console.log(values)
+    console.log(incident)
+    formik.submitForm()
   }
 
   return (
@@ -62,11 +62,13 @@ const CreateIncidentPage = () => {
             <Grid item md={6} xs={12}>
               <TextField
                 fullWidth
+                error={Boolean(formik.touched.name && formik.errors.name)}
+                helperText={formik.touched.name && formik.errors.name}
                 label="Name"
-                name="Name"
-                onChange={handleChange}
+                name="name"
+                onChange={formik.handleChange}
                 required
-                value={values.name}
+                value={formik.values.name}
                 variant="outlined"
               />
             </Grid>
@@ -75,8 +77,8 @@ const CreateIncidentPage = () => {
                 fullWidth
                 label="Note"
                 name="note"
-                onChange={handleChange}
-                value={values.note}
+                onChange={formik.handleChange}
+                value={formik.values.note}
                 variant="outlined"
               />
             </Grid>
@@ -85,11 +87,11 @@ const CreateIncidentPage = () => {
                 fullWidth
                 label="Incident Type"
                 name="type"
-                onChange={handleChange}
+                onChange={formik.handleChange}
                 required
                 select
                 SelectProps={{ native: true }}
-                value={values.type}
+                value={formik.values.type}
                 variant="outlined"
               >
                 {IncidentType.LIST.map(option => (
@@ -108,8 +110,8 @@ const CreateIncidentPage = () => {
                   ampm={false}
                   id="date-picker-inline"
                   label="Select Incident Date"
-                  value={values.incidentDate}
-                  onChange={handleChangeDate}
+                  value={formik.values.incidentDate}
+                  onChange={formik.handleChange}
                 />
               </MuiPickersUtilsProvider>
             </Grid>
@@ -118,14 +120,16 @@ const CreateIncidentPage = () => {
                 fullWidth
                 label="User"
                 name="userId"
-                onChange={handleChange}
+                error={Boolean(formik.touched.userId && formik.errors.userId)}
+                helperText={formik.touched.userId && formik.errors.userId}
+                onChange={formik.handleChange}
                 required
                 select
                 SelectProps={{
                   native: true,
                 }}
                 defaultValue="-1"
-                value={values.userId}
+                value={formik.values.userId}
                 variant="outlined"
               >
                 <option value="-1">Please select User</option>
@@ -143,11 +147,11 @@ const CreateIncidentPage = () => {
                 fullWidth
                 label="Incident Status"
                 name="Incident Status"
-                onChange={handleChange}
+                onChange={formik.handleChange}
                 required
                 select
                 SelectProps={{ native: true }}
-                value={values.status}
+                value={formik.values.status}
                 variant="outlined"
               >
                 {IncidentStatus.LIST.map(option => (
@@ -164,8 +168,8 @@ const CreateIncidentPage = () => {
                 rows={5}
                 label="Description"
                 name="description"
-                onChange={handleChange}
-                value={values.description}
+                onChange={formik.handleChange}
+                value={formik.values.description}
                 variant="outlined"
               />
             </Grid>
