@@ -1,5 +1,5 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-export function handleToken(token: any, refreshToken: any) {
-  document.cookie = `token=${token}`
-  document.cookie = `refreshToken=${refreshToken}`
+export function handleToken(token: any, user: any) {
+  localStorage.setItem('token', token)
+  localStorage.setItem('user', JSON.stringify(user))
 }

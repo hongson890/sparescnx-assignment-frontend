@@ -23,14 +23,14 @@ export const ProtectedRouteWrapper = ({
   <Route
     {...rest}
     render={(props) => {
-      if (getCookie('isLoggedIn') === 'true') {
+      if (localStorage.getItem('token')) {
         return (
           <Layout {...props}>
             <Component {...props} />
           </Layout>
         )
       } else {
-        return <Redirect to={{ pathname: "/", state: { from: props.location } }} />
+        return <Redirect to={{ pathname: "/login", state: { from: props.location } }} />
       }
     }}
   />

@@ -6,7 +6,7 @@ import { createBrowserHistory } from 'history'
 import theme from './theme'
 import GlobalStyles from './components/GlobalStyles'
 import DashboardLayout from './layouts/DashboardLayout'
-import { RouteWrapper } from './components/RouteWrapper'
+import { ProtectedRouteWrapper, RouteWrapper } from './components/RouteWrapper'
 import { LoginPage } from './views/LoginPage'
 import LoginLayout from './layouts/LoginLayout'
 import { UserTablePage } from './views/UserTable'
@@ -22,7 +22,7 @@ const App = () => {
       <GlobalStyles />
       <Router history={history}>
         <Switch>
-          <RouteWrapper
+          <ProtectedRouteWrapper
             exact
             path="/"
             component={IncidentsListPage}

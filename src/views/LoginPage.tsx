@@ -67,14 +67,14 @@ const Login = (props: any) => {
 
     if (state.successData === null && state.failedData !== null) {
       // Do something if login failed
-      setHint('Login failed !')
+      setHint('Invalid email or password')
     }
   }, [state])
 
   const [formInput, setFormInput] = useReducer(
     (state: any, newState: any) => ({ ...state, ...newState }),
     {
-      username: '',
+      email: '',
       password: '',
     },
   )
@@ -82,10 +82,10 @@ const Login = (props: any) => {
   const handleSubmit = (event: any) => {
     event.preventDefault()
 
-    if (formInput.username === '' || formInput.password === '') {
+    if (formInput.email === '' || formInput.password === '') {
       setHint('All fileds must be filled')
     } else {
-      submitLogin(formInput)
+      submitLogin(formInput.email, formInput.password)
     }
   }
 
@@ -101,8 +101,8 @@ const Login = (props: any) => {
         <TextField
           label="Username"
           id="margin-normal"
-          name="username"
-          defaultValue={formInput.username}
+          name="email"
+          defaultValue={formInput.email}
           className={classes.textField}
           onChange={handleInput}
         />
@@ -133,9 +133,6 @@ const Login = (props: any) => {
         {hint.length !== 0 && <div className={classes.hint}>{hint}</div>}
         {hint.length === 0 && state.successData !== null && (
           <div className={classes.success}>Success !</div>
-        )}
-        {state.failedData !== null && (
-          <div className={classes.success}>{hint}</div>
         )}
       </form>
     </>

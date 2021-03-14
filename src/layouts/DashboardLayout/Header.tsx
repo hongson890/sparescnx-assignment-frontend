@@ -6,9 +6,11 @@ import {
   Typography,
   Link,
   TextField,
+  IconButton,
 } from '@material-ui/core'
 import HomeIcon from '@material-ui/icons/Home'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight'
+import InputIcon from '@material-ui/icons/Input'
 import Autocomplete from '@material-ui/lab/Autocomplete'
 import SearchIcon from '@material-ui/icons/Search'
 import HistoryIcon from '@material-ui/icons/History'
@@ -101,7 +103,11 @@ const useStyles = makeStyles(theme => ({
 const Header = ({ path }: HeaderProps) => {
   const classes = useStyles()
   const history = useHistory()
-
+  const logOut = () => {
+    localStorage.removeItem('token')
+    localStorage.removeItem('user')
+    history.push('/login')
+  }
   return (
     <div className={classes.root}>
       <Breadcrumbs
@@ -113,6 +119,9 @@ const Header = ({ path }: HeaderProps) => {
         </Link>
         {path && <Typography color="inherit">{path}</Typography>}
       </Breadcrumbs>
+      <IconButton onClick={logOut} color="inherit">
+        <InputIcon />
+      </IconButton>
     </div>
   )
 }
