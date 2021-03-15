@@ -10,10 +10,10 @@ import DashboardLayout from './layouts/DashboardLayout'
 import { ProtectedRouteWrapper, RouteWrapper } from './components/RouteWrapper'
 import { LoginPage } from './views/LoginPage'
 import LoginLayout from './layouts/LoginLayout'
-import IncidentsListPage from './views/Incident/IncidentsListPage'
 import IncidentDetailPage from './views/Incident/IncidentDetailPage'
 import { CreateIncidentPage } from './views/Incident/CreateIncidentPage'
 import history from './components/History'
+import { IncidentsListPage } from './views/Incident/IncidentsListPage'
 
 const App = () => {
     return (

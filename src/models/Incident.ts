@@ -3,8 +3,6 @@ import { IncidentType } from '../constants/IncidentType'
 import { CouchDbEntity } from './CouchDbEntity'
 
 export class Incident extends CouchDbEntity {
-    id: string = ''
-
     name: string = ''
 
     type: string = IncidentType.NORMAL.value

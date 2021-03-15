@@ -1,5 +1,5 @@
 export class CouchDbEntity {
-    _id?: string
+    _id: string = ''
 
     _rev?: string
 }

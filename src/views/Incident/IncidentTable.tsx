@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { Dispatch, SetStateAction, useState } from 'react'
 import PropTypes from 'prop-types'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import {
@@ -26,9 +26,16 @@ const useStyles = makeStyles(theme => ({
 
 interface IncidentTableProps {
     incidents: Array<Incident>
+    fireChangeLimit: (limit: number) => void
+    fireChangePage: (page: number) => void
 }
 
-const IncidentTable = ({ incidents, ...rest }: IncidentTableProps) => {
+const IncidentTable = ({
+    incidents,
+    fireChangeLimit,
+    fireChangePage,
+    ...rest
+}: IncidentTableProps) => {
     const classes = useStyles()
     const [selectedCustomerIds, setSelectedCustomerIds] = useState<string[]>([])
     const [limit, setLimit] = useState(10)
@@ -38,7 +45,7 @@ const IncidentTable = ({ incidents, ...rest }: IncidentTableProps) => {
         let newSelectedCustomerIds: string[] = []
 
         if (event.target.checked) {
-            newSelectedCustomerIds = incidents.map(incident => incident.id)
+            newSelectedCustomerIds = incidents.map(incident => incident._id)
         } else {
             newSelectedCustomerIds = []
         }
@@ -75,10 +82,12 @@ const IncidentTable = ({ incidents, ...rest }: IncidentTableProps) => {
 
     const handleLimitChange = (event: any) => {
         setLimit(event.target.value)
+        fireChangeLimit(event.target.value)
     }
 
     const handlePageChange = (event: any, newPage: number) => {
         setPage(newPage)
+        fireChangePage(newPage)
     }
 
     return (
@@ -115,10 +124,10 @@ const IncidentTable = ({ incidents, ...rest }: IncidentTableProps) => {
                             {incidents.slice(0, limit).map(incident => (
                                 <TableRow
                                     hover
-                                    key={incident.id}
+                                    key={incident._id}
                                     selected={
                                         selectedCustomerIds.indexOf(
-                                            incident.id,
+                                            incident._id,
                                         ) !== -1
                                     }
                                 >
@@ -126,13 +135,13 @@ const IncidentTable = ({ incidents, ...rest }: IncidentTableProps) => {
                                         <Checkbox
                                             checked={
                                                 selectedCustomerIds.indexOf(
-                                                    incident.id,
+                                                    incident._id,
                                                 ) !== -1
                                             }
                                             onChange={event =>
                                                 handleSelectOne(
                                                     event,
-                                                    incident.id,
+                                                    incident._id,
                                                 )
                                             }
                                             value="true"

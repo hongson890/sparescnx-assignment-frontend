@@ -1,9 +1,9 @@
 import CreateDataContext from '../CreateDataContext'
 import { incidentReducer, initialState } from './incident.reducers'
-import { getAllUser, createIncident } from './incident.action'
+import { getAllUser, createIncident, searchIncident } from './incident.action'
 
 export const { Provider, Context } = CreateDataContext(
     incidentReducer,
-    { getAllUser, createIncident },
+    { getAllUser, createIncident, searchIncident },
     initialState,
 )

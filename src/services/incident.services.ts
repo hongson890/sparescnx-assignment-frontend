@@ -11,10 +11,20 @@ async function createIncident(incident: Incident) {
     return result
 }
 
-async function searchIncident(inputSearch: string) {
+async function searchIncident(
+    input: string,
+    page: number,
+    limit: number,
+    orderBy: string[],
+) {
     let result = await axios.request({
         url: `${BACKEND_SERVICE_URL}/incidents/search`,
-        data: inputSearch,
+        data: {
+            input,
+            page,
+            limit,
+            orderBy,
+        },
         method: 'POST',
     })
     return result
@@ -22,4 +32,5 @@ async function searchIncident(inputSearch: string) {
 
 export const incidentService = {
     createIncident,
+    searchIncident,
 }

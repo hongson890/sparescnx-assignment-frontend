@@ -3,11 +3,15 @@ import {
     CREATE_INCIDENT_FAIL,
     CREATE_INCIDENT_SUCCESS,
     GET_ALL_USER_SUCCESS,
+    SEARCH_INCIDENT,
+    SEARCH_INCIDENT_FAIL,
+    SEARCH_INCIDENT_SUCCESS,
 } from './incident.constants'
 
-const emptyUserList: any[] = []
+const emptyList: any[] = []
 export const initialState = {
-    userList: emptyUserList,
+    userList: emptyList,
+    incidentList: emptyList,
     isLoading: false,
     message: null,
     isError: false,
@@ -33,6 +37,26 @@ export const incidentReducer = (state = initialState, action: any) => {
                 message: action.message,
             }
         case CREATE_INCIDENT_FAIL:
+            return {
+                ...state,
+                isLoading: false,
+                isError: true,
+                message: action.message,
+            }
+        case SEARCH_INCIDENT:
+            return {
+                ...state,
+                isLoading: true,
+            }
+        case SEARCH_INCIDENT_SUCCESS:
+            return {
+                ...state,
+                incidentList: action.incidentList,
+                isLoading: false,
+                isError: false,
+                message: action.message,
+            }
+        case SEARCH_INCIDENT_FAIL:
             return {
                 ...state,
                 isLoading: false,

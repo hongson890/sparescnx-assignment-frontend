@@ -5,8 +5,8 @@ import { IncidentStatus } from '../../constants/IncidentStatus'
 
 const incidentData: Array<Incident> = [
     {
-        id: uuid(),
-        name: 'testing incident 1',
+        _id: uuid(),
+        name: 'testing inc_ident 1',
         type: IncidentType.NORMAL.value,
         createdAt: new Date(),
         createdBy: 'Admin1',
@@ -16,8 +16,8 @@ const incidentData: Array<Incident> = [
         status: IncidentStatus.NEW.value,
     },
     {
-        id: uuid(),
-        name: 'testing incident 1',
+        _id: uuid(),
+        name: 'testing inc_ident 1',
         type: IncidentType.NORMAL.value,
         createdAt: new Date(),
         createdBy: 'Admin1',
@@ -27,8 +27,8 @@ const incidentData: Array<Incident> = [
         status: IncidentStatus.NEW.value,
     },
     {
-        id: uuid(),
-        name: 'testing incident 1',
+        _id: uuid(),
+        name: 'testing inc_ident 1',
         type: IncidentType.NORMAL.value,
         createdAt: new Date(),
         createdBy: 'Admin1',
@@ -38,8 +38,8 @@ const incidentData: Array<Incident> = [
         status: IncidentStatus.NEW.value,
     },
     {
-        id: uuid(),
-        name: 'testing incident 1',
+        _id: uuid(),
+        name: 'testing inc_ident 1',
         type: IncidentType.NORMAL.value,
         createdAt: new Date(),
         createdBy: 'Admin1',
@@ -49,8 +49,8 @@ const incidentData: Array<Incident> = [
         status: IncidentStatus.NEW.value,
     },
     {
-        id: uuid(),
-        name: 'testing incident 1',
+        _id: uuid(),
+        name: 'testing inc_ident 1',
         type: IncidentType.NORMAL.value,
         createdAt: new Date(),
         createdBy: 'Admin1',
@@ -60,8 +60,8 @@ const incidentData: Array<Incident> = [
         status: IncidentStatus.NEW.value,
     },
     {
-        id: uuid(),
-        name: 'testing incident 1',
+        _id: uuid(),
+        name: 'testing inc_ident 1',
         type: IncidentType.NORMAL.value,
         createdAt: new Date(),
         createdBy: 'Admin1',
@@ -71,8 +71,8 @@ const incidentData: Array<Incident> = [
         status: IncidentStatus.NEW.value,
     },
     {
-        id: uuid(),
-        name: 'testing incident 1',
+        _id: uuid(),
+        name: 'testing inc_ident 1',
         type: IncidentType.NORMAL.value,
         createdAt: new Date(),
         createdBy: 'Admin1',
@@ -82,8 +82,8 @@ const incidentData: Array<Incident> = [
         status: IncidentStatus.NEW.value,
     },
     {
-        id: uuid(),
-        name: 'testing incident 1',
+        _id: uuid(),
+        name: 'testing inc_ident 1',
         type: IncidentType.NORMAL.value,
         createdAt: new Date(),
         createdBy: 'Admin1',
@@ -93,8 +93,8 @@ const incidentData: Array<Incident> = [
         status: IncidentStatus.NEW.value,
     },
     {
-        id: uuid(),
-        name: 'testing incident 1',
+        _id: uuid(),
+        name: 'testing inc_ident 1',
         type: IncidentType.NORMAL.value,
         createdAt: new Date(),
         createdBy: 'Admin1',
@@ -104,8 +104,8 @@ const incidentData: Array<Incident> = [
         status: IncidentStatus.NEW.value,
     },
     {
-        id: uuid(),
-        name: 'testing incident 1',
+        _id: uuid(),
+        name: 'testing inc_ident 1',
         type: IncidentType.NORMAL.value,
         createdAt: new Date(),
         createdBy: 'Admin1',
@@ -115,8 +115,8 @@ const incidentData: Array<Incident> = [
         status: IncidentStatus.NEW.value,
     },
     {
-        id: uuid(),
-        name: 'testing incident 1',
+        _id: uuid(),
+        name: 'testing inc_ident 1',
         type: IncidentType.NORMAL.value,
         createdAt: new Date(),
         createdBy: 'Admin1',
@@ -126,8 +126,8 @@ const incidentData: Array<Incident> = [
         status: IncidentStatus.NEW.value,
     },
     {
-        id: uuid(),
-        name: 'testing incident 1',
+        _id: uuid(),
+        name: 'testing inc_ident 1',
         type: IncidentType.NORMAL.value,
         createdAt: new Date(),
         createdBy: 'Admin1',

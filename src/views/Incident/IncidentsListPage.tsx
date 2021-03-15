@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useReducer, useState } from 'react'
 import {
     Box,
     Button,
@@ -10,10 +10,14 @@ import {
     SvgIcon,
     TextField,
 } from '@material-ui/core'
-import { useHistory } from 'react-router-dom'
 import { Search as SearchIcon } from 'react-feather'
 import IncidentTable from './IncidentTable'
 import incidentData from '../../tests/mocks/incident-data'
+import {
+    Context as IncidentContext,
+    Provider as IncidentProvider,
+} from '../../contexts/incident'
+import history from '../../components/History'
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -41,11 +45,29 @@ const useStyles = makeStyles(theme => ({
     },
 }))
 
-const IncidentsListPage = () => {
+const IncidentsListInst = () => {
     const classes = useStyles()
-    const [incidents] = useState(incidentData)
-    const history = useHistory()
+    const { state, getAllUser, searchIncident } = useContext(IncidentContext)
+    const [filterValue, setFilterValue] = useState('')
+    const [limit, setLimit] = useState(10)
+    const [page, setPage] = useState(0)
     const deleteIncident = () => {}
+    const orderBy = ['type', 'incidentDate']
+
+    useEffect(() => {
+        searchIncident('sdfsdfsdfd', page, limit, orderBy)
+    }, [page, limit])
+
+    useEffect(() => {
+        if (filterValue.length >= 3) {
+            searchIncident(filterValue, page, limit, orderBy)
+        }
+    }, [filterValue])
+
+    const fireChangeTable = (limit: number, page: number) => {
+        setLimit(limit)
+        setPage(page)
+    }
 
     return (
         <Container maxWidth={false}>
@@ -80,6 +102,9 @@ const IncidentsListPage = () => {
                     <CardContent>
                         <Box maxWidth="100%">
                             <TextField
+                                value={filterValue}
+                                helperText="Please input more than 3 characters"
+                                onChange={e => setFilterValue(e.target.value)}
                                 fullWidth
                                 InputProps={{
                                     startAdornment: (
@@ -93,7 +118,7 @@ const IncidentsListPage = () => {
                                         </InputAdornment>
                                     ),
                                 }}
-                                placeholder="Search Incident"
+                                placeholder="Search Incident by name"
                                 variant="outlined"
                             />
                         </Box>
@@ -101,10 +126,18 @@ const IncidentsListPage = () => {
                 </Card>
             </Box>
             <Box mt={3}>
-                <IncidentTable incidents={incidents} />
+                <IncidentTable
+                    incidents={state.incidentList}
+                    fireChangeLimit={(limit: number): void => setLimit(limit)}
+                    fireChangePage={(page: number): void => setPage(page)}
+                />
             </Box>
         </Container>
     )
 }
 
-export default IncidentsListPage
+export const IncidentsListPage = () => (
+    <IncidentProvider>
+        <IncidentsListInst />
+    </IncidentProvider>
+)
