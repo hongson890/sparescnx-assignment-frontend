@@ -1,8 +1,9 @@
 import axios from 'axios'
 import { BACKEND_SERVICE_URL } from './gateway.config'
 import { Incident } from '../models/Incident'
+import { IncidentCreatedDTO } from '../models/IncidentCreatedDTO'
 
-async function createIncident(incident: Incident) {
+async function createIncident(incident: IncidentCreatedDTO) {
     let result = await axios.request({
         url: `${BACKEND_SERVICE_URL}/incidents/create`,
         data: incident,
@@ -30,7 +31,19 @@ async function searchIncident(
     return result
 }
 
+async function deleteIncidents(deletedIds: string[]) {
+    let result = await axios.request({
+        url: `${BACKEND_SERVICE_URL}/incidents/delete`,
+        data: {
+            deletedIds,
+        },
+        method: 'DELETE',
+    })
+    return result
+}
+
 export const incidentService = {
     createIncident,
     searchIncident,
+    deleteIncidents,
 }

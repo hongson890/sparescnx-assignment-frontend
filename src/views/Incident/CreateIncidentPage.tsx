@@ -24,6 +24,7 @@ import {
     Provider as IncidentProvider,
 } from '../../contexts/incident'
 import { Alert } from '../../components/Alert'
+import { IncidentCreatedDTO } from '../../models/IncidentCreatedDTO'
 
 const useStyles = makeStyles(theme => ({
     root: {},
@@ -42,12 +43,12 @@ const CreateIncidentInst = () => {
     }, [])
 
     const formik = useFormik({
-        initialValues: new Incident(),
+        initialValues: new IncidentCreatedDTO(),
         validationSchema: Yup.object().shape({
             name: Yup.string().max(255).required('Name is required'),
             userId: Yup.string().max(255).required('User is required'),
         }),
-        onSubmit: (incident: Incident) => {
+        onSubmit: (incident: IncidentCreatedDTO) => {
             createIncident(incident)
         },
     })

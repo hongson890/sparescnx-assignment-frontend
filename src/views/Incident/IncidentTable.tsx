@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState } from 'react'
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import {
@@ -28,18 +28,24 @@ interface IncidentTableProps {
     incidents: Array<Incident>
     fireChangeLimit: (limit: number) => void
     fireChangePage: (page: number) => void
+    fireChangeSelectedUsers: (ids: string[]) => void
 }
 
 const IncidentTable = ({
     incidents,
     fireChangeLimit,
     fireChangePage,
+    fireChangeSelectedUsers,
     ...rest
 }: IncidentTableProps) => {
     const classes = useStyles()
     const [selectedCustomerIds, setSelectedCustomerIds] = useState<string[]>([])
     const [limit, setLimit] = useState(10)
     const [page, setPage] = useState(0)
+
+    useEffect(() => {
+        fireChangeSelectedUsers(selectedCustomerIds)
+    }, [selectedCustomerIds])
 
     const handleSelectAll = (event: any) => {
         let newSelectedCustomerIds: string[] = []

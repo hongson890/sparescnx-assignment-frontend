@@ -2,6 +2,9 @@ import {
     CREATE_INCIDENT,
     CREATE_INCIDENT_FAIL,
     CREATE_INCIDENT_SUCCESS,
+    DELETE_INCIDENT,
+    DELETE_INCIDENT_FAIL,
+    DELETE_INCIDENT_SUCCESS,
     GET_ALL_USER_SUCCESS,
     SEARCH_INCIDENT,
     SEARCH_INCIDENT_FAIL,
@@ -15,6 +18,7 @@ export const initialState = {
     isLoading: false,
     message: null,
     isError: false,
+    triggerSearching: false,
 }
 
 export const incidentReducer = (state = initialState, action: any) => {
@@ -62,6 +66,22 @@ export const incidentReducer = (state = initialState, action: any) => {
                 isLoading: false,
                 isError: true,
                 message: action.message,
+            }
+        case DELETE_INCIDENT:
+            return {
+                ...state,
+                isLoading: true,
+            }
+        case DELETE_INCIDENT_SUCCESS:
+            return {
+                ...state,
+                isLoading: false,
+                triggerSearching: true,
+            }
+        case DELETE_INCIDENT_FAIL:
+            return {
+                ...state,
+                isLoading: false,
             }
         default:
             return state

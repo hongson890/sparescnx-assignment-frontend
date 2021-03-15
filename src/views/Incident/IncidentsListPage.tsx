@@ -18,6 +18,7 @@ import {
     Provider as IncidentProvider,
 } from '../../contexts/incident'
 import history from '../../components/History'
+import { deleteIncidents } from '../../contexts/incident/incident.action'
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -47,11 +48,17 @@ const useStyles = makeStyles(theme => ({
 
 const IncidentsListInst = () => {
     const classes = useStyles()
-    const { state, getAllUser, searchIncident } = useContext(IncidentContext)
+    const { state, getAllUser, searchIncident, deleteIncidents } = useContext(
+        IncidentContext,
+    )
     const [filterValue, setFilterValue] = useState('')
     const [limit, setLimit] = useState(10)
     const [page, setPage] = useState(0)
-    const deleteIncident = () => {}
+    const [listIds, setListIds] = useState<string[]>([])
+    const deleteIncident = () => {
+        console.log(listIds)
+        deleteIncidents(listIds, filterValue, page, limit, orderBy)
+    }
     const orderBy = ['type', 'incidentDate']
 
     useEffect(() => {
@@ -130,6 +137,9 @@ const IncidentsListInst = () => {
                     incidents={state.incidentList}
                     fireChangeLimit={(limit: number): void => setLimit(limit)}
                     fireChangePage={(page: number): void => setPage(page)}
+                    fireChangeSelectedUsers={(ids: string[]): void =>
+                        setListIds(ids)
+                    }
                 />
             </Box>
         </Container>
