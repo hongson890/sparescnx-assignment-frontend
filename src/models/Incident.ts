@@ -3,23 +3,23 @@ import { IncidentType } from '../constants/IncidentType'
 import { CouchDbEntity } from './CouchDbEntity'
 
 export class Incident extends CouchDbEntity {
-  id: string = ''
+    id: string = ''
 
-  name: string = ''
+    name: string = ''
 
-  type: string = IncidentType.NORMAL.value
+    type: string = IncidentType.NORMAL.value
 
-  incidentDate?: Date = new Date()
+    incidentDate?: Date = new Date()
 
-  description: string = ''
+    description: string = ''
 
-  note: string = ''
+    note: string = ''
 
-  status: string = IncidentStatus.NEW.value
+    status: string = IncidentStatus.NEW.value
 
-  userId?: string
+    userId?: string
 
-  createdBy: string = ''
+    createdBy: string = ''
 
-  createdAt: Date = new Date()
+    createdAt: Date = new Date()
 }

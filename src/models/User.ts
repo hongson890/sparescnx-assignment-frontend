@@ -1,17 +1,17 @@
 import { CouchDbEntity } from './CouchDbEntity'
 
 export class User extends CouchDbEntity {
-  email?: string
+    email?: string
 
-  password?: string
+    password?: string
 
-  role?: string
+    role?: string
 
-  firstName?: string
+    firstName?: string
 
-  lastName?: string
+    lastName?: string
 
-  id?: string
+    id?: string
 
-  createdBy?: string
+    createdBy?: string
 }

@@ -16,46 +16,46 @@ import { CreateIncidentPage } from './views/Incident/CreateIncidentPage'
 import history from './components/History'
 
 const App = () => {
-  return (
-    <ThemeProvider theme={theme}>
-      <ReactNotification />
-      <GlobalStyles />
-      <Router history={history}>
-        <Switch>
-          <ProtectedRouteWrapper
-            exact
-            path="/"
-            component={IncidentsListPage}
-            layout={DashboardLayout}
-          />
-          <RouteWrapper
-            exact
-            path="/incident/create"
-            component={CreateIncidentPage}
-            layout={DashboardLayout}
-          />
-          <RouteWrapper
-            exact
-            path="/incident/detail/:id"
-            component={IncidentDetailPage}
-            layout={DashboardLayout}
-          />
-          <RouteWrapper
-            exact
-            path="/incident/list"
-            component={IncidentsListPage}
-            layout={DashboardLayout}
-          />
-          <RouteWrapper
-            exact
-            path="/login"
-            component={LoginPage}
-            layout={LoginLayout}
-          />
-        </Switch>
-      </Router>
-    </ThemeProvider>
-  )
+    return (
+        <ThemeProvider theme={theme}>
+            <ReactNotification />
+            <GlobalStyles />
+            <Router history={history}>
+                <Switch>
+                    <ProtectedRouteWrapper
+                        exact
+                        path="/"
+                        component={IncidentsListPage}
+                        layout={DashboardLayout}
+                    />
+                    <RouteWrapper
+                        exact
+                        path="/incident/create"
+                        component={CreateIncidentPage}
+                        layout={DashboardLayout}
+                    />
+                    <RouteWrapper
+                        exact
+                        path="/incident/detail/:id"
+                        component={IncidentDetailPage}
+                        layout={DashboardLayout}
+                    />
+                    <RouteWrapper
+                        exact
+                        path="/incident/list"
+                        component={IncidentsListPage}
+                        layout={DashboardLayout}
+                    />
+                    <RouteWrapper
+                        exact
+                        path="/login"
+                        component={LoginPage}
+                        layout={LoginLayout}
+                    />
+                </Switch>
+            </Router>
+        </ThemeProvider>
+    )
 }
 
 export default App
