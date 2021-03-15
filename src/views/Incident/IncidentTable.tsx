@@ -28,6 +28,7 @@ const useStyles = makeStyles(theme => ({
 
 interface IncidentTableProps {
     incidents: Array<Incident>
+    totalRow: number
     fireChangeLimit: (limit: number) => void
     fireChangePage: (page: number) => void
     fireChangeSelectedUsers: (ids: string[]) => void
@@ -35,6 +36,7 @@ interface IncidentTableProps {
 
 const IncidentTable = ({
     incidents,
+    totalRow,
     fireChangeLimit,
     fireChangePage,
     fireChangeSelectedUsers,
@@ -181,7 +183,7 @@ const IncidentTable = ({
             </PerfectScrollbar>
             <TablePagination
                 component="div"
-                count={incidents.length}
+                count={totalRow}
                 onChangePage={handlePageChange}
                 onChangeRowsPerPage={handleLimitChange}
                 page={page}

@@ -12,6 +12,7 @@ const emptyList: any[] = []
 export const initialState = {
     userList: emptyList,
     incidentList: emptyList,
+    totalRow: 0,
     isLoading: false,
     message: null,
     isError: false,
@@ -53,6 +54,7 @@ export const incidentReducer = (state = initialState, action: any) => {
             return {
                 ...state,
                 incidentList: action.incidentList,
+                totalRow: action.totalRow,
                 isLoading: false,
                 isError: false,
                 message: action.message,

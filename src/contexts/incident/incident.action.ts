@@ -54,7 +54,8 @@ export const searchIncident = (dispatch: any) => (
         .then(result => {
             dispatch({
                 type: SEARCH_INCIDENT_SUCCESS,
-                incidentList: result.data,
+                incidentList: result.data.rows.map((a: any) => a.value),
+                totalRow: result.data.total_rows,
             })
         })
         .catch(error => {

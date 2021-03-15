@@ -49,7 +49,7 @@ const useStyles = makeStyles(theme => ({
 const IncidentsListInst = () => {
     const classes = useStyles()
     const { state, getAllUser, searchIncident } = useContext(IncidentContext)
-    const [filterValue, setFilterValue] = useState('aaaa')
+    const [filterValue, setFilterValue] = useState('')
     const [limit, setLimit] = useState(10)
     const [page, setPage] = useState(0)
     const [listIds, setListIds] = useState<string[]>([])
@@ -141,6 +141,7 @@ const IncidentsListInst = () => {
             <Box mt={3}>
                 <IncidentTable
                     incidents={state.incidentList}
+                    totalRow={state.totalRow}
                     fireChangeLimit={(limit: number): void => setLimit(limit)}
                     fireChangePage={(page: number): void => setPage(page)}
                     fireChangeSelectedUsers={(ids: string[]): void =>
