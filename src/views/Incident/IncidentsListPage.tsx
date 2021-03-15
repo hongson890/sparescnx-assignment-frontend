@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useReducer, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import {
     Box,
     Button,
@@ -12,13 +12,13 @@ import {
 } from '@material-ui/core'
 import { Search as SearchIcon } from 'react-feather'
 import IncidentTable from './IncidentTable'
-import incidentData from '../../tests/mocks/incident-data'
 import {
     Context as IncidentContext,
     Provider as IncidentProvider,
 } from '../../contexts/incident'
 import history from '../../components/History'
-import { deleteIncidents } from '../../contexts/incident/incident.action'
+import { incidentService } from '../../services/incident.services'
+import { Alert } from '../../components/Alert'
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -48,21 +48,27 @@ const useStyles = makeStyles(theme => ({
 
 const IncidentsListInst = () => {
     const classes = useStyles()
-    const { state, getAllUser, searchIncident, deleteIncidents } = useContext(
-        IncidentContext,
-    )
-    const [filterValue, setFilterValue] = useState('')
+    const { state, getAllUser, searchIncident } = useContext(IncidentContext)
+    const [filterValue, setFilterValue] = useState('aaaa')
     const [limit, setLimit] = useState(10)
     const [page, setPage] = useState(0)
     const [listIds, setListIds] = useState<string[]>([])
-    const deleteIncident = () => {
+    const deleteIncident = async () => {
         console.log(listIds)
-        deleteIncidents(listIds, filterValue, page, limit, orderBy)
+        try {
+            if (listIds.length > 0) {
+                await incidentService.deleteIncidents(listIds)
+                Alert.info('Delete Incident successfully')
+                searchIncident(filterValue, page, limit, orderBy)
+            }
+        } catch (e) {
+            Alert.error('Delete Incident fail')
+        }
     }
     const orderBy = ['type', 'incidentDate']
 
     useEffect(() => {
-        searchIncident('sdfsdfsdfd', page, limit, orderBy)
+        searchIncident(filterValue, page, limit, orderBy)
     }, [page, limit])
 
     useEffect(() => {
