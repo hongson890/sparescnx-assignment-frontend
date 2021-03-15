@@ -15,7 +15,13 @@ async function getAll() {
     return res.data
 }
 
+async function getUserDetail(userId?: string) {
+    let res = await axios.get(`${BACKEND_SERVICE_URL}/users/${userId}`)
+    return res.data
+}
+
 export const userService = {
     fetchUsersFromAPI,
     getAll,
+    getUserDetail,
 }

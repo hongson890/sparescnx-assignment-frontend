@@ -1,32 +1,18 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
     Box,
-    Button,
     Card,
     CardContent,
     CardHeader,
-    Checkbox,
     Divider,
-    Grid,
     makeStyles,
     Table,
     TableBody,
     TableCell,
-    TableHead,
     TableRow,
-    TextField,
 } from '@material-ui/core'
-import {
-    DateTimePicker,
-    KeyboardDatePicker,
-    MuiPickersUtilsProvider,
-} from '@material-ui/pickers'
-import DateFnsUtils from '@date-io/date-fns'
 import { Incident } from '../../models/Incident'
-import { IncidentType } from '../../constants/IncidentType'
-import { IncidentStatus } from '../../constants/IncidentStatus'
-import { User } from '../../models/User'
-import usersData from '../../tests/mocks/user-datas'
+import { userService } from '../../services/users.services'
 
 const useStyles = makeStyles(theme => ({
     root: {},
@@ -38,27 +24,17 @@ const useStyles = makeStyles(theme => ({
     },
 }))
 
-const IncidentDetailPage = () => {
+const IncidentDetailPage = (incident: Incident) => {
     const classes = useStyles()
-    const [values, setValues] = useState(new Incident())
-    const [users, setUsers] = useState<User[]>(usersData)
+    const [assignee, setAssignee] = useState('')
+    useEffect(() => {
+        const userDetail: any = getUserDetail(incident.userId)
+        setAssignee(`${userDetail.firstName} ${userDetail.lastName}`)
+    }, [])
 
-    const handleChange = (event: any) => {
-        setValues({
-            ...values,
-            [event.target.name]: event.target.value,
-        })
-    }
-
-    const handleChangeDate = (dateValue: any) => {
-        setValues({
-            ...values,
-            incidentDate: dateValue,
-        })
-    }
-
-    const saveIncident = () => {
-        console.log(values)
+    async function getUserDetail(userId?: string) {
+        const userDetail = await userService.getUserDetail(userId)
+        return userDetail
     }
 
     return (
@@ -75,13 +51,11 @@ const IncidentDetailPage = () => {
                         <TableBody>
                             <TableRow>
                                 <TableCell variant="head">Name</TableCell>
-                                <TableCell>
-                                    Incident for winter solder
-                                </TableCell>
+                                <TableCell>{incident.name}</TableCell>
                             </TableRow>
                             <TableRow>
                                 <TableCell variant="head">Assignee</TableCell>
-                                <TableCell>Pham Hong Son</TableCell>
+                                <TableCell>{assignee}</TableCell>
                             </TableRow>
                             <TableRow>
                                 <TableCell variant="head">Status</TableCell>
