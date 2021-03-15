@@ -42,8 +42,14 @@ async function deleteIncidents(deletedIds: string[]) {
     return result
 }
 
+async function getIncidentDetail(id: string) {
+    let res = await axios.get(`${BACKEND_SERVICE_URL}/incidents/${id}`)
+    return res.data
+}
+
 export const incidentService = {
     createIncident,
     searchIncident,
     deleteIncidents,
+    getIncidentDetail,
 }

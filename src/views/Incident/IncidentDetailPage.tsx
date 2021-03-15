@@ -11,8 +11,10 @@ import {
     TableCell,
     TableRow,
 } from '@material-ui/core'
+import { useParams } from 'react-router-dom'
+import moment from 'moment'
 import { Incident } from '../../models/Incident'
-import { userService } from '../../services/users.services'
+import { incidentService } from '../../services/incident.services'
 
 const useStyles = makeStyles(theme => ({
     root: {},
@@ -24,17 +26,23 @@ const useStyles = makeStyles(theme => ({
     },
 }))
 
-const IncidentDetailPage = (incident: Incident) => {
+interface Identifiable {
+    id: string
+}
+
+const IncidentDetailPage = () => {
     const classes = useStyles()
     const [assignee, setAssignee] = useState('')
+    const params: Identifiable = useParams()
+    const [incident, setIncident] = useState(new Incident())
     useEffect(() => {
-        const userDetail: any = getUserDetail(incident.userId)
-        setAssignee(`${userDetail.firstName} ${userDetail.lastName}`)
+        getIncidentDetail(params.id)
     }, [])
 
-    async function getUserDetail(userId?: string) {
-        const userDetail = await userService.getUserDetail(userId)
-        return userDetail
+    async function getIncidentDetail(id: string) {
+        const incidentDetail = await incidentService.getIncidentDetail(id)
+        setIncident(incidentDetail)
+        setAssignee(incidentDetail.fullName)
     }
 
     return (
@@ -59,15 +67,19 @@ const IncidentDetailPage = (incident: Incident) => {
                             </TableRow>
                             <TableRow>
                                 <TableCell variant="head">Status</TableCell>
-                                <TableCell>New</TableCell>
+                                <TableCell>{incident.status}</TableCell>
                             </TableRow>
                             <TableRow>
                                 <TableCell variant="head">Type</TableCell>
-                                <TableCell>Urgent</TableCell>
+                                <TableCell>{incident.type}</TableCell>
                             </TableRow>
                             <TableRow>
                                 <TableCell variant="head">Create At</TableCell>
-                                <TableCell>18 Mar 2021</TableCell>
+                                <TableCell>
+                                    {moment(incident.createdAt).format(
+                                        'MMMM Do YYYY, h:mm:ss a',
+                                    )}
+                                </TableCell>
                             </TableRow>
                         </TableBody>
                     </Table>

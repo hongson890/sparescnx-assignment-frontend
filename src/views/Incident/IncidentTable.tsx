@@ -1,26 +1,28 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react'
-import PropTypes from 'prop-types'
+import React, { useEffect, useState } from 'react'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import {
-    Avatar,
     Box,
     Card,
     Checkbox,
+    makeStyles,
     Table,
     TableBody,
     TableCell,
     TableHead,
     TablePagination,
     TableRow,
-    Typography,
-    makeStyles,
 } from '@material-ui/core'
 import { Incident } from '../../models/Incident'
+import history from '../../components/History'
 
 const useStyles = makeStyles(theme => ({
     root: {},
     avatar: {
         marginRight: theme.spacing(2),
+    },
+    viewLink: {
+        cursor: 'pointer',
+        color: theme.palette.info.main,
     },
 }))
 
@@ -153,7 +155,17 @@ const IncidentTable = ({
                                             value="true"
                                         />
                                     </TableCell>
-                                    <TableCell>{incident.name}</TableCell>
+                                    <TableCell
+                                        onClick={() => {
+                                            history.push(
+                                                `/incident/detail/${incident._id}`,
+                                            )
+                                        }}
+                                    >
+                                        <span className={classes.viewLink}>
+                                            {incident.name}
+                                        </span>
+                                    </TableCell>
                                     <TableCell>{incident.userId}</TableCell>
                                     <TableCell>{incident.type}</TableCell>
                                     <TableCell>{incident.status}</TableCell>
