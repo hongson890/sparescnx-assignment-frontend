@@ -1,4 +1,5 @@
 import {
+  GET_ALL_USER_SUCCESS,
   SEARCH_USER,
   SEARCH_USER_ERROR,
   SEARCH_USER_SUCCESS,
@@ -16,7 +17,7 @@ export const initialState = {
 
 export const usersReducers = (state = initialState, action: any) => {
   switch (action.type) {
-    case SEARCH_USER_SUCCESS:
+    case GET_ALL_USER_SUCCESS:
       return {
         ...state,
         isLoading: false,

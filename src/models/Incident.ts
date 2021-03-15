@@ -1,9 +1,8 @@
-import { CreatedAudit } from './CreatedAudit'
-import { User } from './User'
 import { IncidentStatus } from '../constants/IncidentStatus'
 import { IncidentType } from '../constants/IncidentType'
+import { CouchDbEntity } from './CouchDbEntity'
 
-export class Incident extends CreatedAudit {
+export class Incident extends CouchDbEntity {
   id: string = ''
 
   name: string = ''
@@ -18,5 +17,9 @@ export class Incident extends CreatedAudit {
 
   status: string = IncidentStatus.NEW.value
 
-  userId?: number
+  userId?: string
+
+  createdBy: string = ''
+
+  createdAt: Date = new Date()
 }

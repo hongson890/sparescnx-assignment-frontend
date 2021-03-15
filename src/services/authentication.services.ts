@@ -13,6 +13,6 @@ async function submitLogin(email: string, password: string) {
   return result
 }
 
-export const loginService = {
+export const authenticationService = {
   submitLogin,
 }

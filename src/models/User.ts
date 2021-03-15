@@ -1,11 +1,17 @@
-import { CreatedAudit } from './CreatedAudit'
+import { CouchDbEntity } from './CouchDbEntity'
 
-export class User extends CreatedAudit {
-  id: number = 0
+export class User extends CouchDbEntity {
+  email?: string
 
-  firstName: string = ''
+  password?: string
 
-  lastName: string = ''
+  role?: string
 
-  dateOfBirth?: Date = undefined
+  firstName?: string
+
+  lastName?: string
+
+  id?: string
+
+  createdBy?: string
 }

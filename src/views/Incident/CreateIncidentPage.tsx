@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect } from 'react'
 import {
   Box,
   Button,
@@ -10,44 +10,47 @@ import {
   makeStyles,
   TextField,
 } from '@material-ui/core'
-import {
-  DateTimePicker,
-  KeyboardDatePicker,
-  MuiPickersUtilsProvider,
-} from '@material-ui/pickers'
+import { DateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
 import * as Yup from 'yup'
 import { useFormik } from 'formik'
 import DateFnsUtils from '@date-io/date-fns'
+import 'react-toastify/dist/ReactToastify.css'
 import { Incident } from '../../models/Incident'
 import { IncidentType } from '../../constants/IncidentType'
 import { IncidentStatus } from '../../constants/IncidentStatus'
 import { User } from '../../models/User'
-import usersData from '../../tests/mocks/user-datas'
+import {
+  Context as IncidentContext,
+  Provider as IncidentProvider,
+} from '../../contexts/incident'
+import { Alert } from '../../components/Alert'
 
 const useStyles = makeStyles(theme => ({
   root: {},
+  spinner: {
+    marginLeft: '10px',
+    width: '12px',
+  },
 }))
 
-const CreateIncidentPage = () => {
+const CreateIncidentInst = () => {
   const classes = useStyles()
-  const [incident, setIncident] = useState(new Incident())
-  const [users, setUsers] = useState<User[]>(usersData)
+  const { state, getAllUser, createIncident } = useContext(IncidentContext)
+
+  useEffect(() => {
+    getAllUser()
+  }, [])
+
   const formik = useFormik({
     initialValues: new Incident(),
     validationSchema: Yup.object().shape({
       name: Yup.string().max(255).required('Name is required'),
-      date: Yup.date().required('Incident date is required'),
-      userId: Yup.number().integer().min(0).required('User is required'),
+      userId: Yup.string().max(255).required('User is required'),
     }),
-    onSubmit: values => {
-      console.log(values)
+    onSubmit: (incident: Incident) => {
+      createIncident(incident)
     },
   })
-
-  const saveIncident = () => {
-    console.log(incident)
-    formik.submitForm()
-  }
 
   return (
     <form autoComplete="off" noValidate>
@@ -133,9 +136,9 @@ const CreateIncidentPage = () => {
                 variant="outlined"
               >
                 <option value="-1">Please select User</option>
-                {users.map((user: User) => {
+                {state.userList.map((user: User) => {
                   return (
-                    <option key={user.id} value={user.id}>
+                    <option key={user._id} value={user._id}>
                       {user.firstName} {user.lastName}
                     </option>
                   )
@@ -177,7 +180,18 @@ const CreateIncidentPage = () => {
         </CardContent>
         <Divider />
         <Box display="flex" justifyContent="flex-end" p={2}>
-          <Button color="primary" variant="contained" onClick={saveIncident}>
+          <Button
+            color="primary"
+            variant="contained"
+            onClick={formik.submitForm}
+          >
+            {state.isLoading && (
+              <img
+                alt="spinner"
+                src="/images/spinner.gif"
+                className={classes.spinner}
+              />
+            )}
             Save Incident
           </Button>
         </Box>
@@ -186,4 +200,8 @@ const CreateIncidentPage = () => {
   )
 }
 
-export default CreateIncidentPage
+export const CreateIncidentPage = () => (
+  <IncidentProvider>
+    <CreateIncidentInst />
+  </IncidentProvider>
+)

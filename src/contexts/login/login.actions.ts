@@ -4,14 +4,14 @@ import {
   LOGIN_FAILED,
 } from './login.constants'
 import { handleToken } from './login.helper'
-import { loginService } from '../../services/login.services'
+import { authenticationService } from '../../services/authentication.services'
 
 export const submitLogin = (dispatch: any) => (
   email: string,
   password: string,
 ) => {
   dispatch({ type: SUBMIT_LOGIN_LOADING, payload: true })
-  loginService
+  authenticationService
     .submitLogin(email, password)
     .then(results => {
       dispatch({ type: LOGIN_SUCCESS, payload: results })

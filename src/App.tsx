@@ -2,23 +2,23 @@ import React from 'react'
 import { Router, Switch } from 'react-router-dom'
 import { ThemeProvider } from '@material-ui/core/styles'
 import './index.css'
-import { createBrowserHistory } from 'history'
+import ReactNotification from 'react-notifications-component'
+import 'react-notifications-component/dist/theme.css'
 import theme from './theme'
 import GlobalStyles from './components/GlobalStyles'
 import DashboardLayout from './layouts/DashboardLayout'
 import { ProtectedRouteWrapper, RouteWrapper } from './components/RouteWrapper'
 import { LoginPage } from './views/LoginPage'
 import LoginLayout from './layouts/LoginLayout'
-import { UserTablePage } from './views/UserTable'
-import CreateIncidentPage from './views/Incident/CreateIncidentPage'
 import IncidentsListPage from './views/Incident/IncidentsListPage'
 import IncidentDetailPage from './views/Incident/IncidentDetailPage'
-
-export const history = createBrowserHistory()
+import { CreateIncidentPage } from './views/Incident/CreateIncidentPage'
+import history from './components/History'
 
 const App = () => {
   return (
     <ThemeProvider theme={theme}>
+      <ReactNotification />
       <GlobalStyles />
       <Router history={history}>
         <Switch>
