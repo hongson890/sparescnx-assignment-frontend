@@ -4,13 +4,17 @@ import {
     Button,
     Card,
     CardContent,
+    CardHeader,
     Container,
+    Grid,
     InputAdornment,
     makeStyles,
     SvgIcon,
     TextField,
 } from '@material-ui/core'
 import { Search as SearchIcon } from 'react-feather'
+import DateFnsUtils from '@date-io/date-fns'
+import { DateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers'
 import IncidentTable from './IncidentTable'
 import {
     Context as IncidentContext,
@@ -19,6 +23,9 @@ import {
 import history from '../../components/History'
 import { incidentService } from '../../services/incident.services'
 import { Alert } from '../../components/Alert'
+import { IncidentStatus } from '../../constants/IncidentStatus'
+import { IncidentType } from '../../constants/IncidentType'
+import { User } from '../../models/User'
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -49,33 +56,28 @@ const useStyles = makeStyles(theme => ({
 const IncidentsListInst = () => {
     const classes = useStyles()
     const { state, getAllUser, searchIncident } = useContext(IncidentContext)
-    const [filterValue, setFilterValue] = useState('')
+    const [incidentType, setIncidentType] = useState<string>(
+        IncidentType.NORMAL.value,
+    )
     const [limit, setLimit] = useState(10)
     const [page, setPage] = useState(0)
     const [listIds, setListIds] = useState<string[]>([])
     const deleteIncident = async () => {
-        console.log(listIds)
         try {
             if (listIds.length > 0) {
                 await incidentService.deleteIncidents(listIds)
                 Alert.info('Delete Incident successfully')
-                searchIncident(filterValue, page, limit, orderBy)
+                searchIncident(incidentType, page, limit, sortedBy)
             }
         } catch (e) {
             Alert.error('Delete Incident fail')
         }
     }
-    const orderBy = ['type', 'incidentDate']
+    const sortedBy = 'createdAt'
 
     useEffect(() => {
-        searchIncident(filterValue, page, limit, orderBy)
-    }, [page, limit])
-
-    useEffect(() => {
-        if (filterValue.length >= 3) {
-            searchIncident(filterValue, page, limit, orderBy)
-        }
-    }, [filterValue])
+        searchIncident(incidentType, page, limit, sortedBy)
+    }, [page, limit, incidentType, incidentType])
 
     const fireChangeTable = (limit: number, page: number) => {
         setLimit(limit)
@@ -84,7 +86,11 @@ const IncidentsListInst = () => {
 
     return (
         <Container maxWidth={false}>
-            <Box display="flex" justifyContent="flex-end">
+            <Box
+                display="flex"
+                justifyContent="flex-end"
+                style={{ marginBottom: '20px' }}
+            >
                 <Button
                     className={classes.addBtn}
                     color="primary"
@@ -102,42 +108,44 @@ const IncidentsListInst = () => {
                 >
                     Delete incident
                 </Button>
-                <Button
-                    className={classes.assignBtn}
-                    variant="contained"
-                    onClick={deleteIncident}
-                >
-                    Assign incident
-                </Button>
             </Box>
-            <Box mt={3}>
+            <Grid>
                 <Card>
+                    <CardHeader
+                        subheader="This screen filters incidents by incident type, and sort by Created Date desc by default"
+                        title="Filter Incident"
+                    />
                     <CardContent>
-                        <Box maxWidth="100%">
-                            <TextField
-                                value={filterValue}
-                                helperText="Please input more than 3 characters"
-                                onChange={e => setFilterValue(e.target.value)}
-                                fullWidth
-                                InputProps={{
-                                    startAdornment: (
-                                        <InputAdornment position="start">
-                                            <SvgIcon
-                                                fontSize="small"
-                                                color="action"
+                        <CardContent>
+                            <Grid container spacing={3}>
+                                <Grid item md={12} xs={12}>
+                                    <TextField
+                                        fullWidth
+                                        label="Incident Type"
+                                        name="type"
+                                        value={incidentType}
+                                        onChange={e =>
+                                            setIncidentType(e.target.value)
+                                        }
+                                        select
+                                        SelectProps={{ native: true }}
+                                        variant="outlined"
+                                    >
+                                        {IncidentType.LIST.map(option => (
+                                            <option
+                                                key={option.value}
+                                                value={option.value}
                                             >
-                                                <SearchIcon />
-                                            </SvgIcon>
-                                        </InputAdornment>
-                                    ),
-                                }}
-                                placeholder="Search Incident by name"
-                                variant="outlined"
-                            />
-                        </Box>
+                                                {option.name}
+                                            </option>
+                                        ))}
+                                    </TextField>
+                                </Grid>
+                            </Grid>
+                        </CardContent>
                     </CardContent>
                 </Card>
-            </Box>
+            </Grid>
             <Box mt={3}>
                 <IncidentTable
                     incidents={state.incidentList}

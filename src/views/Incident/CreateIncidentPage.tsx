@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import {
     Box,
     Button,
@@ -25,6 +25,7 @@ import {
 } from '../../contexts/incident'
 import { Alert } from '../../components/Alert'
 import { IncidentCreatedDTO } from '../../models/IncidentCreatedDTO'
+import { userService } from "../../services/users.services";
 
 const useStyles = makeStyles(theme => ({
     root: {},
@@ -36,11 +37,17 @@ const useStyles = makeStyles(theme => ({
 
 const CreateIncidentInst = () => {
     const classes = useStyles()
-    const { state, getAllUser, createIncident } = useContext(IncidentContext)
+    const { state, createIncident } = useContext(IncidentContext)
+    const [listUser, setListUser] = useState([])
 
     useEffect(() => {
-        getAllUser()
+        // getAllUser()
     }, [])
+
+     const getAllUser = async () => {
+         const listU = await userService.getAll()
+         setListUser(listU)
+    }
 
     const formik = useFormik({
         initialValues: new IncidentCreatedDTO(),
@@ -150,7 +157,7 @@ const CreateIncidentInst = () => {
                                 variant="outlined"
                             >
                                 <option value="-1">Please select User</option>
-                                {state.userList.map((user: User) => {
+                                {listUser.map((user: User) => {
                                     return (
                                         <option key={user._id} value={user._id}>
                                             {user.firstName} {user.lastName}

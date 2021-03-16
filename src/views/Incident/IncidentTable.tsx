@@ -12,6 +12,7 @@ import {
     TablePagination,
     TableRow,
 } from '@material-ui/core'
+import moment from 'moment'
 import { Incident } from '../../models/Incident'
 import history from '../../components/History'
 
@@ -100,6 +101,11 @@ const IncidentTable = ({
         fireChangePage(newPage)
     }
 
+    function getDateValue(dateValue: any) {
+        if (!dateValue) return ''
+        return moment(dateValue).format('MMMM Do YYYY, h:mm:ss a')
+    }
+
     return (
         <Card {...rest}>
             <PerfectScrollbar>
@@ -123,10 +129,8 @@ const IncidentTable = ({
                                     />
                                 </TableCell>
                                 <TableCell>Name</TableCell>
-                                <TableCell>Assignee</TableCell>
                                 <TableCell>Incident Type</TableCell>
                                 <TableCell>Incident Status</TableCell>
-                                <TableCell>Created By</TableCell>
                                 <TableCell>Created At</TableCell>
                             </TableRow>
                         </TableHead>
@@ -168,12 +172,10 @@ const IncidentTable = ({
                                             {incident.name}
                                         </span>
                                     </TableCell>
-                                    <TableCell>{incident.userId}</TableCell>
                                     <TableCell>{incident.type}</TableCell>
                                     <TableCell>{incident.status}</TableCell>
-                                    <TableCell>{incident.createdBy}</TableCell>
                                     <TableCell>
-                                        {incident.createdAt.toString()}
+                                        {getDateValue(incident.createdAt)}
                                     </TableCell>
                                 </TableRow>
                             ))}

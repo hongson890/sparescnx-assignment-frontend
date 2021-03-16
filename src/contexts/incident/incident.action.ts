@@ -3,27 +3,14 @@ import {
     CREATE_INCIDENT,
     CREATE_INCIDENT_FAIL,
     CREATE_INCIDENT_SUCCESS,
-    GET_ALL_USER_SUCCESS,
     SEARCH_INCIDENT,
     SEARCH_INCIDENT_FAIL,
     SEARCH_INCIDENT_SUCCESS,
 } from './incident.constants'
-import { userService } from '../../services/users.services'
 import { incidentService } from '../../services/incident.services'
 import { Alert } from '../../components/Alert'
 import history from '../../components/History'
 import { IncidentCreatedDTO } from '../../models/IncidentCreatedDTO'
-
-export const getAllUser = (dispatch: any) => () => {
-    userService
-        .getAll()
-        .then(result => {
-            dispatch({ type: GET_ALL_USER_SUCCESS, userList: result })
-        })
-        .catch(error => {
-            console.log(error)
-        })
-}
 
 export const createIncident = (dispatch: any) => (
     incident: IncidentCreatedDTO,
@@ -43,19 +30,20 @@ export const createIncident = (dispatch: any) => (
 }
 
 export const searchIncident = (dispatch: any) => (
-    input: string,
+    incidentType: string,
     page: number,
     limit: number,
-    orderBy: string[],
+    sortedBy: string,
 ) => {
     dispatch({ type: SEARCH_INCIDENT })
     incidentService
-        .searchIncident(input, page, limit, orderBy)
+        .searchIncident(incidentType, page, limit, sortedBy)
         .then(result => {
+            const data = result.rows.map((row: any) => row.value)
             dispatch({
                 type: SEARCH_INCIDENT_SUCCESS,
-                incidentList: result.data.rows.map((a: any) => a.value),
-                totalRow: result.data.total_rows,
+                incidentList: data,
+                totalRow: result.total_rows,
             })
         })
         .catch(error => {

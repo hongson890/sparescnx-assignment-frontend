@@ -13,6 +13,7 @@
     "jest": true
   },
   "rules": {
+    "prettier/prettier": 0,
     "allowPattern": 0,
     "max-len": "off",
     "linebreak-style": 0,
@@ -52,15 +53,14 @@
     "@typescript-eslint/no-unused-vars": "off",
     "@typescript-eslint/dot-notation": "off",
     "@typescript-eslint/no-shadow": "off",
+    "@typescript-eslint/no-useless-constructor": "off",
+    "@typescript-eslint/no-empty-function": "off",
     "react/destructuring-assignment": "off",
     "no-nested-ternary": "off",
     "func-names": "off",
     "react/no-array-index-key": "off",
     "react/no-danger": "off",
     "react/no-unescaped-entities": "off",
-    "prettier/prettier": ["error",{
-      "endOfLine": "auto"}
-    ]
   },
   "overrides": [
     {

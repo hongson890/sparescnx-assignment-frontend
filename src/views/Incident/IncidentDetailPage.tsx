@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import {
     Box,
+    Button,
     Card,
     CardContent,
     CardHeader,
@@ -13,6 +14,7 @@ import {
 } from '@material-ui/core'
 import { useParams } from 'react-router-dom'
 import moment from 'moment'
+import history from '../../components/History'
 import { Incident } from '../../models/Incident'
 import { incidentService } from '../../services/incident.services'
 
@@ -26,7 +28,7 @@ const useStyles = makeStyles(theme => ({
     },
 }))
 
-interface Identifiable {
+export interface Identifiable {
     id: string
 }
 
@@ -83,6 +85,13 @@ const IncidentDetailPage = () => {
                             </TableRow>
                         </TableBody>
                     </Table>
+                </Box>
+                <Box display="flex" justifyContent="flex-start" p={2}>
+                    <Button onClick={() => {
+                        history.push(`/incident/edit/${incident._id}`)
+                    }} color="primary" variant="contained">
+                        Edit Incident
+                    </Button>
                 </Box>
             </CardContent>
         </Card>

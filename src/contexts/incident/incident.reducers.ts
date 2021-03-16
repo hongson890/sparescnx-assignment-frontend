@@ -2,7 +2,6 @@ import {
     CREATE_INCIDENT,
     CREATE_INCIDENT_FAIL,
     CREATE_INCIDENT_SUCCESS,
-    GET_ALL_USER_SUCCESS,
     SEARCH_INCIDENT,
     SEARCH_INCIDENT_FAIL,
     SEARCH_INCIDENT_SUCCESS,
@@ -21,11 +20,6 @@ export const initialState = {
 
 export const incidentReducer = (state = initialState, action: any) => {
     switch (action.type) {
-        case GET_ALL_USER_SUCCESS:
-            return {
-                ...state,
-                userList: action.userList,
-            }
         case CREATE_INCIDENT:
             return {
                 ...state,

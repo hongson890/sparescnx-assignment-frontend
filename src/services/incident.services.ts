@@ -2,6 +2,7 @@ import axios from 'axios'
 import { BACKEND_SERVICE_URL } from './gateway.config'
 import { Incident } from '../models/Incident'
 import { IncidentCreatedDTO } from '../models/IncidentCreatedDTO'
+import { HttpServices } from './http.services'
 
 async function createIncident(incident: IncidentCreatedDTO) {
     let result = await axios.request({
@@ -13,38 +14,30 @@ async function createIncident(incident: IncidentCreatedDTO) {
 }
 
 async function searchIncident(
-    input: string,
+    incidentType: string,
     page: number,
     limit: number,
-    orderBy: string[],
+    sortedBy: string,
 ) {
-    let result = await axios.request({
-        url: `${BACKEND_SERVICE_URL}/incidents/search`,
-        data: {
-            input,
-            page,
-            limit,
-            orderBy,
-        },
-        method: 'POST',
-    })
-    return result
+    const data = {
+        incidentType,
+        page,
+        limit,
+        sortedBy,
+    }
+
+    return HttpServices.doPost(`${BACKEND_SERVICE_URL}/incidents/search`, data)
 }
 
 async function deleteIncidents(deletedIds: string[]) {
-    let result = await axios.request({
-        url: `${BACKEND_SERVICE_URL}/incidents/delete`,
-        data: {
-            deletedIds,
-        },
-        method: 'DELETE',
-    })
-    return result
+    return HttpServices.deDelete(
+        `${BACKEND_SERVICE_URL}/incidents/delete`,
+        deletedIds,
+    )
 }
 
 async function getIncidentDetail(id: string) {
-    let res = await axios.get(`${BACKEND_SERVICE_URL}/incidents/${id}`)
-    return res.data
+    return HttpServices.doGet(`${BACKEND_SERVICE_URL}/incidents/${id}`)
 }
 
 export const incidentService = {
