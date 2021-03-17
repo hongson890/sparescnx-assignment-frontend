@@ -179,7 +179,7 @@ const CreateIncidentInst = () => {
                             <TextField
                                 fullWidth
                                 label="Incident Status"
-                                name="Incident Status"
+                                name="status"
                                 onChange={formik.handleChange}
                                 required
                                 select
