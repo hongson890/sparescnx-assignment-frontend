@@ -3,6 +3,10 @@
 In this project, I'm gonna build a React Application example with some features, including React Router, ContextAPI, MaterialUI, etc. 
 The following functions has been implemented:
 
+- JWT Authentication
+- Provide Protected Route and Public Route
+- Different Wrap Layouts Setup
+- State Management using Context-API
 - Raise an incident as an admin
 - Assign the incident to a user
 - Assign the incident to a user
