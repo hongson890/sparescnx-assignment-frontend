@@ -22,11 +22,6 @@ const items = [
         title: 'Incidents',
         active: true,
     },
-    {
-        href: '/user',
-        icon: userIcon,
-        title: 'Users',
-    },
 ]
 interface NavBarProps {
     setOpen: (open: boolean) => void

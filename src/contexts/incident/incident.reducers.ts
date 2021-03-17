@@ -15,7 +15,6 @@ export const initialState = {
     isLoading: false,
     message: null,
     isError: false,
-    triggerSearching: false,
 }
 
 export const incidentReducer = (state = initialState, action: any) => {
@@ -30,7 +29,6 @@ export const incidentReducer = (state = initialState, action: any) => {
                 ...state,
                 isLoading: false,
                 isError: false,
-                message: action.message,
             }
         case CREATE_INCIDENT_FAIL:
             return {
@@ -51,7 +49,6 @@ export const incidentReducer = (state = initialState, action: any) => {
                 totalRow: action.totalRow,
                 isLoading: false,
                 isError: false,
-                message: action.message,
             }
         case SEARCH_INCIDENT_FAIL:
             return {

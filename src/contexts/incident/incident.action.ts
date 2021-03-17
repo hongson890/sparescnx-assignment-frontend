@@ -19,7 +19,7 @@ export const createIncident = (dispatch: any) => (
     incidentService
         .createIncident(incident)
         .then(result => {
-            dispatch({ type: CREATE_INCIDENT_SUCCESS, message: result })
+            dispatch({ type: CREATE_INCIDENT_SUCCESS })
             Alert.success('Create incident successfully')
             history.push(`/incident/list`)
         })
@@ -39,7 +39,7 @@ export const searchIncident = (dispatch: any) => (
     incidentService
         .searchIncident(incidentType, page, limit, sortedBy)
         .then(result => {
-            const data = result.rows.map((row: any) => row.value)
+            const data = result.rows
             dispatch({
                 type: SEARCH_INCIDENT_SUCCESS,
                 incidentList: data,
