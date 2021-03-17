@@ -15,6 +15,7 @@ The following functions has been implemented:
 - Responsive Design
 - Unit Test, with coverage setup
 - ESLint, Typescript
+- Dockerization application.
 
 ## Getting Started
 
