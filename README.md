@@ -53,7 +53,7 @@ Builds the app for production to the `build` folder.\
 
 ## Docker file
 ```
-docker pull hongson890/sparescnx-assignment-frontend:tagname
+docker pull hongson890/sparescnx-assignment-frontend:latest
 docker run -d -it  -p 3005:80/tcp --name sparescnx-assignment-frontend hongson890/sparescnx-assignment-frontend:latest
 ```
 
