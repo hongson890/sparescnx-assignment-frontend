@@ -51,6 +51,13 @@ yarn build
 
 Builds the app for production to the `build` folder.\
 
+## Docker file
+```
+docker pull hongson890/sparescnx-assignment-frontend:tagname
+docker run -d -it  -p 3005:80/tcp --name sparescnx-assignment-frontend hongson890/sparescnx-assignment-frontend:latest
+```
+
+
 ## Demo
 Using existed account (ADMIN role) to login into system
 ```
@@ -61,19 +68,19 @@ password: 123456
 ## Screenshots
 1._Login Page_
 
-![ScreenShot](https://raw.githubusercontent.com/hongson890/son-react-xendit-assignment/main/screenshots/login.png)
+![ScreenShot](https://raw.githubusercontent.com/hongson890/sparescnx-assignment-frontend/main/src/screenshots/login.png)
 
-2._Register Page_
+2._List Incidents & Filter_
 
-![ScreenShot](https://raw.githubusercontent.com/hongson890/son-react-xendit-assignment/main/screenshots/register.png)
+![ScreenShot](https://raw.githubusercontent.com/hongson890/sparescnx-assignment-frontend/main/src/screenshots/home.png)
 
-3._Universities Searching Page_
+3._View Incident detail and assign to the user_
 
-![ScreenShot](https://raw.githubusercontent.com/hongson890/son-react-xendit-assignment/main/screenshots/universities.png)
+![ScreenShot](https://raw.githubusercontent.com/hongson890/sparescnx-assignment-frontend/main/src/screenshots/assignment.png)
 
-4._User Profile Page (Login Required)_
+4._Coughdb Console_
 
-![ScreenShot](https://raw.githubusercontent.com/hongson890/son-react-xendit-assignment/main/screenshots/user-profile.png)
+![ScreenShot](https://raw.githubusercontent.com/hongson890/sparescnx-assignment-frontend/main/src/screenshots/couchdb.png)
 
 
 
@@ -81,6 +88,3 @@ password: 123456
 
 * **Son Pham** - *Initial work* - [Son Pham](https://github.com/hongson890)
 
-## License
-
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
