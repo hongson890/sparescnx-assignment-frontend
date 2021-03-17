@@ -5,12 +5,7 @@ import { IncidentCreatedDTO } from '../models/IncidentCreatedDTO'
 import { HttpServices } from './http.services'
 
 async function createIncident(incident: IncidentCreatedDTO) {
-    let result = await axios.request({
-        url: `${BACKEND_SERVICE_URL}/incidents/create`,
-        data: incident,
-        method: 'POST',
-    })
-    return result
+    return HttpServices.doPost(`${BACKEND_SERVICE_URL}/incidents/create`, incident)
 }
 
 async function searchIncident(
@@ -40,9 +35,14 @@ async function getIncidentDetail(id: string) {
     return HttpServices.doGet(`${BACKEND_SERVICE_URL}/incidents/${id}`)
 }
 
+async function updateIncident(incident: Incident) {
+    return HttpServices.doPut(`${BACKEND_SERVICE_URL}/incidents/${incident._id}`, incident)
+}
+
 export const incidentService = {
     createIncident,
     searchIncident,
     deleteIncidents,
     getIncidentDetail,
+    updateIncident,
 }

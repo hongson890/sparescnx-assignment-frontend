@@ -31,6 +31,19 @@ export class HttpServices {
         return result.data
     }
 
+    public static async doPut(url: string, data?: any) {
+        const headers = {
+            Authorization: `Bearer ${token}`,
+        }
+        let result = await axios.request({
+            headers,
+            url,
+            data,
+            method: 'PUT',
+        })
+        return result.data
+    }
+
     public static async deDelete(url: string, data?: any) {
         const headers = {
             Authorization: `Bearer ${token}`,

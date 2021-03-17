@@ -5,18 +5,22 @@ import {
     Card,
     CardContent,
     CardHeader,
-    Divider,
+    Divider, Grid,
     makeStyles,
     Table,
     TableBody,
     TableCell,
-    TableRow,
+    TableRow, TextField,
 } from '@material-ui/core'
 import { useParams } from 'react-router-dom'
 import moment from 'moment'
 import history from '../../components/History'
 import { Incident } from '../../models/Incident'
 import { incidentService } from '../../services/incident.services'
+import { User } from "../../models/User";
+import { userService } from "../../services/users.services";
+import { IncidentStatus } from "../../constants/IncidentStatus";
+import { Alert } from '../../components/Alert'
 
 const useStyles = makeStyles(theme => ({
     root: {},
@@ -34,17 +38,47 @@ export interface Identifiable {
 
 const IncidentDetailPage = () => {
     const classes = useStyles()
-    const [assignee, setAssignee] = useState('')
     const params: Identifiable = useParams()
     const [incident, setIncident] = useState(new Incident())
+    const [listUser, setListUser] = useState<any[]>([])
+    const [selectedUserId, setSelectedUserId] = useState('')
     useEffect(() => {
-        getIncidentDetail(params.id)
+        getAllUser()
     }, [])
 
-    async function getIncidentDetail(id: string) {
+    const getAllUser = async () => {
+        const listU = await userService.getAll()
+        setListUser(listU)
+        getIncidentDetail(params.id)
+
+    }
+
+    const getIncidentDetail = async (id: string) => {
         const incidentDetail = await incidentService.getIncidentDetail(id)
         setIncident(incidentDetail)
-        setAssignee(incidentDetail.fullName)
+        setSelectedUserId(incidentDetail._id)
+    }
+
+    const assignIncident = async () => {
+        if (selectedUserId) {
+            incident.userId = selectedUserId
+            incident.status = IncidentStatus.ASSIGNED.value
+            incident.assignee = getAssigneeName(selectedUserId)
+        }
+        const result = await incidentService.updateIncident(incident)
+        console.log(result)
+        if (result.ok) {
+            Alert.success(`Assign this incident to ${incident.assignee} successfully`)
+            history.push('/incident/list')
+        }
+    }
+
+    const getAssigneeName = (userId?: string) => {
+        const filterA = listUser.filter((u: any) => u._id === userId)
+        if (!filterA || filterA.length === 0) {
+            return ''
+        }
+        return `${filterA[0].firstName} ${filterA[0].lastName}`
     }
 
     return (
@@ -65,7 +99,7 @@ const IncidentDetailPage = () => {
                             </TableRow>
                             <TableRow>
                                 <TableCell variant="head">Assignee</TableCell>
-                                <TableCell>{assignee}</TableCell>
+                                <TableCell>{incident.assignee}</TableCell>
                             </TableRow>
                             <TableRow>
                                 <TableCell variant="head">Status</TableCell>
@@ -86,11 +120,33 @@ const IncidentDetailPage = () => {
                         </TableBody>
                     </Table>
                 </Box>
+                <hr />
                 <Box display="flex" justifyContent="flex-start" p={2}>
-                    <Button onClick={() => {
-                        history.push(`/incident/edit/${incident._id}`)
-                    }} color="primary" variant="contained">
-                        Edit Incident
+                    <TextField
+                        style={{ width: '25%', marginLeft: '10px', marginTop: '10px', height: '40px' }}
+                        label="User"
+                        name="userId"
+                        required
+                        select
+                        onChange={(e) => { setSelectedUserId(e.target.value)}}
+                        value={selectedUserId}
+                        SelectProps={{
+                            native: true,
+                        }}
+                        defaultValue={selectedUserId}
+                        variant="outlined"
+                    >
+                        <option value="-1">Please select User</option>
+                        {listUser.map((user: User) => {
+                            return (
+                                <option key={user._id} value={user._id}>
+                                    {user.firstName} {user.lastName}
+                                </option>
+                            )
+                        })}
+                    </TextField>
+                    <Button style={{ height: '40px', marginTop: '20px', marginLeft: '20px' }} onClick={assignIncident} color="primary" variant="contained">
+                        Assign Incident
                     </Button>
                 </Box>
             </CardContent>

@@ -129,6 +129,7 @@ const IncidentTable = ({
                                     />
                                 </TableCell>
                                 <TableCell>Name</TableCell>
+                                <TableCell>Assignee</TableCell>
                                 <TableCell>Incident Type</TableCell>
                                 <TableCell>Incident Status</TableCell>
                                 <TableCell>Created At</TableCell>
@@ -172,6 +173,7 @@ const IncidentTable = ({
                                             {incident.name}
                                         </span>
                                     </TableCell>
+                                    <TableCell>{incident.assignee}</TableCell>
                                     <TableCell>{incident.type}</TableCell>
                                     <TableCell>{incident.status}</TableCell>
                                     <TableCell>
@@ -185,7 +187,7 @@ const IncidentTable = ({
             </PerfectScrollbar>
             <TablePagination
                 component="div"
-                count={totalRow}
+                count={incidents.length}
                 onChangePage={handlePageChange}
                 onChangeRowsPerPage={handleLimitChange}
                 page={page}

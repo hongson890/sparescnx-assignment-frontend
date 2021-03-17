@@ -5,6 +5,8 @@ import { CouchDbEntity } from './CouchDbEntity'
 export class Incident extends CouchDbEntity {
     name: string = ''
 
+    assignee: string = ''
+
     type: string = IncidentType.NORMAL.value
 
     incidentDate?: Date = new Date()

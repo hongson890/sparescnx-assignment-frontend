@@ -38,15 +38,23 @@ const useStyles = makeStyles(theme => ({
 const CreateIncidentInst = () => {
     const classes = useStyles()
     const { state, createIncident } = useContext(IncidentContext)
-    const [listUser, setListUser] = useState([])
+    const [listUser, setListUser] = useState<any[]>([])
 
     useEffect(() => {
-        // getAllUser()
+        getAllUser()
     }, [])
 
      const getAllUser = async () => {
          const listU = await userService.getAll()
          setListUser(listU)
+    }
+
+    const getAssigneeName = (userId?: string) => {
+        const filterA = listUser.filter((u: any) => u._id === userId)
+        if (!filterA || filterA.length === 0) {
+            return ''
+        }
+        return `${filterA[0].firstName} ${filterA[0].lastName}`
     }
 
     const formik = useFormik({
@@ -56,6 +64,7 @@ const CreateIncidentInst = () => {
             userId: Yup.string().max(255).required('User is required'),
         }),
         onSubmit: (incident: IncidentCreatedDTO) => {
+            incident.assignee = getAssigneeName(incident.userId)
             createIncident(incident)
         },
     })

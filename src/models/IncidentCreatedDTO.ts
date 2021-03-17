@@ -17,6 +17,8 @@ export class IncidentCreatedDTO {
 
     name?: string
 
+    assignee?: string
+
     type: string = IncidentType.NORMAL.value
 
     incidentDate?: Date = new Date()
@@ -27,7 +29,7 @@ export class IncidentCreatedDTO {
 
     status: string = IncidentStatus.NEW.value
 
-    userId?: string
+    userId?: string = ''
 
     createdBy = ''
 
