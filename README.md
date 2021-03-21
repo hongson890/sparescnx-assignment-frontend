@@ -11,6 +11,8 @@ The following functions has been implemented:
 - Assign the incident to a user
 - Assign the incident to a user
 - Delete an incident
+- Acknowledge the incident as a user
+- Resolve incident as a user
 - Index incidents (includes filtering, sorting by date created/updated and incident type and paging)
 - Responsive Design
 - Unit Test, with coverage setup
@@ -83,7 +85,10 @@ password: 123456
 
 ![ScreenShot](https://raw.githubusercontent.com/hongson890/sparescnx-assignment-frontend/main/src/screenshots/assignment.png)
 
-4._Coughdb Console_
+4._Resolve Incident as a user_
+![ScreenShot](https://raw.githubusercontent.com/hongson890/sparescnx-assignment-frontend/main/src/screenshots/resolve.png)
+
+5._Coughdb Console_
 
 ![ScreenShot](https://raw.githubusercontent.com/hongson890/sparescnx-assignment-frontend/main/src/screenshots/couchdb.png)
 
