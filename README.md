@@ -66,9 +66,14 @@ docker run -d -it  -p 3005:80/tcp --name sparescnx-assignment-frontend hongson89
 
 
 ## Demo
-Using existed account (ADMIN role) to login into system
+Using existed admin account (ADMIN role) to login into system
 ```
-email: admin@gmail.com,
+email: admin@gmail.com
+password: 123456
+```
+Using existed user account (USER role) to login into system
+```
+email: user_test1@gmail.com
 password: 123456
 ```
 
