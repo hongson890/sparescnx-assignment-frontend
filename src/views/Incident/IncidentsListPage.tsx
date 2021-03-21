@@ -26,6 +26,7 @@ import { Alert } from '../../components/Alert'
 import { IncidentStatus } from '../../constants/IncidentStatus'
 import { IncidentType } from '../../constants/IncidentType'
 import { User } from '../../models/User'
+import { Incident } from "../../models/Incident";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -53,6 +54,9 @@ const useStyles = makeStyles(theme => ({
     },
 }))
 
+const userStr = localStorage.getItem('user')
+const user = userStr ? JSON.parse(userStr) : null
+
 const IncidentsListInst = () => {
     const classes = useStyles()
     const { state, getAllUser, searchIncident } = useContext(IncidentContext)
@@ -62,21 +66,47 @@ const IncidentsListInst = () => {
     const [limit, setLimit] = useState(10)
     const [page, setPage] = useState(0)
     const [listIds, setListIds] = useState<string[]>([])
+    const [currentUser, setCurrentUser] = useState<any>(user)
+    const [sortedBy, setSortedBy] = useState<string>('createdAt')
     const deleteIncident = async () => {
         try {
             if (listIds.length > 0) {
                 await incidentService.deleteIncidents(listIds)
                 Alert.info('Delete Incident successfully')
-                searchIncident(incidentType, page, limit, sortedBy)
+                searchIncident(null, incidentType, page, limit, sortedBy)
             }
         } catch (e) {
             Alert.error('Delete Incident fail')
         }
     }
-    const sortedBy = 'createdAt'
+    const resolveIncident = async () => {
+        try {
+            if (listIds.length > 0) {
+                const selectedIncidents = state.incidentList
+                    .filter((i: Incident) => listIds.includes(i._id))
+                selectedIncidents.forEach((i: Incident) => {
+                        i.status = IncidentStatus.RESOLVED.value
+                        return i
+                    })
+
+                await incidentService.resolveIncidents(selectedIncidents)
+                Alert.info('Resolve Incident successfully')
+                searchIncident(currentUser._id, incidentType, page, limit, sortedBy)
+            } else {
+                Alert.warning('Please select at least one incident')
+            }
+        } catch (e) {
+            Alert.error('Resolve Incident fail')
+        }
+    }
 
     useEffect(() => {
-        searchIncident(incidentType, page, limit, sortedBy)
+        if (!currentUser) return
+        if (currentUser.role === 'admin') {
+            searchIncident(null, incidentType, page, limit, sortedBy)
+        } else {
+            searchIncident(currentUser._id, incidentType, page, limit, sortedBy)
+        }
     }, [page, limit, incidentType, incidentType])
 
     const fireChangeTable = (limit: number, page: number) => {
@@ -91,23 +121,36 @@ const IncidentsListInst = () => {
                 justifyContent="flex-end"
                 style={{ marginBottom: '20px' }}
             >
-                <Button
+                {
+                    currentUser.role === 'admin' ?
+                    <>
+                        <Button
                     className={classes.addBtn}
                     color="primary"
                     variant="contained"
                     onClick={() => {
-                        history.push('/incident/create')
-                    }}
-                >
+                    history.push('/incident/create')
+                }}
+                    >
                     Add incident
-                </Button>
-                <Button
+                    </Button>
+                    <Button
                     className={classes.deleteBtn}
                     variant="contained"
                     onClick={deleteIncident}
-                >
+                    >
                     Delete incident
-                </Button>
+                    </Button>
+                    </>
+                    :
+                    <Button
+                    className={classes.assignBtn}
+                    variant="contained"
+                    onClick={resolveIncident}
+                    >
+                    Resolve incident
+                    </Button>
+                }
             </Box>
             <Grid>
                 <Card>

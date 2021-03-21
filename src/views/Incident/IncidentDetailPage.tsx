@@ -36,6 +36,9 @@ export interface Identifiable {
     id: string
 }
 
+const userStr = localStorage.getItem('user')
+const user = userStr ? JSON.parse(userStr) : null
+
 const IncidentDetailPage = () => {
     const classes = useStyles()
     const params: Identifiable = useParams()
@@ -60,6 +63,10 @@ const IncidentDetailPage = () => {
     }
 
     const assignIncident = async () => {
+        if (user.role === 'user') {
+            Alert.info('User is not allowed to assign incident')
+            return
+        }
         if (selectedUserId) {
             incident.userId = selectedUserId
             incident.status = IncidentStatus.ASSIGNED.value
@@ -120,35 +127,40 @@ const IncidentDetailPage = () => {
                         </TableBody>
                     </Table>
                 </Box>
-                <hr />
-                <Box display="flex" justifyContent="flex-start" p={2}>
-                    <TextField
-                        style={{ width: '25%', marginLeft: '10px', marginTop: '10px', height: '40px' }}
-                        label="User"
-                        name="userId"
-                        required
-                        select
-                        onChange={(e) => { setSelectedUserId(e.target.value)}}
-                        value={selectedUserId}
-                        SelectProps={{
-                            native: true,
-                        }}
-                        defaultValue={selectedUserId}
-                        variant="outlined"
-                    >
-                        <option value="-1">Please select User</option>
-                        {listUser.map((user: User) => {
-                            return (
-                                <option key={user._id} value={user._id}>
-                                    {user.firstName} {user.lastName}
-                                </option>
-                            )
-                        })}
-                    </TextField>
-                    <Button style={{ height: '40px', marginTop: '20px', marginLeft: '20px' }} onClick={assignIncident} color="primary" variant="contained">
-                        Assign Incident
-                    </Button>
-                </Box>
+                {
+                    user.role === 'admin' ? <>
+                        <hr />
+                        <Box display="flex" justifyContent="flex-start" p={2}>
+                            <TextField
+                                style={{ width: '25%', marginLeft: '10px', marginTop: '10px', height: '40px' }}
+                                label="User"
+                                name="userId"
+                                required
+                                select
+                                onChange={(e) => { setSelectedUserId(e.target.value)}}
+                                value={selectedUserId}
+                                SelectProps={{
+                                    native: true,
+                                }}
+                                defaultValue={selectedUserId}
+                                variant="outlined"
+                            >
+                                <option value="-1">Please select User</option>
+                                {listUser.map((user: User) => {
+                                    return (
+                                        <option key={user._id} value={user._id}>
+                                            {user.firstName} {user.lastName}
+                                        </option>
+                                    )
+                                })}
+                            </TextField>
+                            <Button style={{ height: '40px', marginTop: '20px', marginLeft: '20px' }} onClick={assignIncident} color="primary" variant="contained">
+                                Assign Incident
+                            </Button>
+                        </Box>
+                    </> : <div />
+                }
+
             </CardContent>
         </Card>
     )

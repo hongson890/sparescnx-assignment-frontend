@@ -9,12 +9,14 @@ async function createIncident(incident: IncidentCreatedDTO) {
 }
 
 async function searchIncident(
+    userId: string,
     incidentType: string,
     page: number,
     limit: number,
     sortedBy: string,
 ) {
     const data = {
+        userId,
         incidentType,
         page,
         limit,
@@ -25,9 +27,16 @@ async function searchIncident(
 }
 
 async function deleteIncidents(deletedIds: string[]) {
-    return HttpServices.deDelete(
+    return HttpServices.doDelete(
         `${BACKEND_SERVICE_URL}/incidents/delete`,
         deletedIds,
+    )
+}
+
+async function resolveIncidents(incidentList: Incident[]) {
+    return HttpServices.doPut(
+        `${BACKEND_SERVICE_URL}/incidents/resolve`,
+        incidentList,
     )
 }
 
@@ -36,7 +45,7 @@ async function getIncidentDetail(id: string) {
 }
 
 async function updateIncident(incident: Incident) {
-    return HttpServices.doPut(`${BACKEND_SERVICE_URL}/incidents/${incident._id}`, incident)
+    return HttpServices.doPut(`${BACKEND_SERVICE_URL}/incidents/update/${incident._id}`, incident)
 }
 
 export const incidentService = {
@@ -45,4 +54,5 @@ export const incidentService = {
     deleteIncidents,
     getIncidentDetail,
     updateIncident,
+    resolveIncidents,
 }

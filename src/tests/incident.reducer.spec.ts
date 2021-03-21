@@ -5,7 +5,7 @@ import incidentData from "./mocks/incident-data.json"
 describe('incidentReducer', () => {
     it('handles SEARCH_INCIDENT_SUCCESS action', () => {
         // @ts-ignore
-        const {rows} = incidentData
+        const { rows } = incidentData
         const expectedState = {
             ...initialState,
             incidentList: rows,

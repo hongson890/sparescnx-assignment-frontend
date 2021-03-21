@@ -7,15 +7,20 @@ export class HttpServices {
     constructor() {}
 
     public static async doGet(url: string) {
-        const headers = {
-            Authorization: `Bearer ${token}`,
+        try {
+            const headers = {
+                Authorization: `Bearer ${token}`,
+            }
+            let result = await axios.request({
+                headers,
+                url,
+                method: 'GET',
+            })
+            return result.data
+        } catch (e) {
+            console.log(e)
+            return Promise.reject(e)
         }
-        let result = await axios.request({
-            headers,
-            url,
-            method: 'GET',
-        })
-        return result.data
     }
 
     public static async doPost(url: string, data?: any) {
@@ -44,7 +49,7 @@ export class HttpServices {
         return result.data
     }
 
-    public static async deDelete(url: string, data?: any) {
+    public static async doDelete(url: string, data?: any) {
         const headers = {
             Authorization: `Bearer ${token}`,
         }

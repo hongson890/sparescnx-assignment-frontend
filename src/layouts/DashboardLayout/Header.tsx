@@ -1,58 +1,13 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import {
-    makeStyles,
-    Breadcrumbs,
-    Typography,
-    Link,
-    TextField,
-    IconButton,
-} from '@material-ui/core'
+import { Breadcrumbs, IconButton, Link, makeStyles, Typography, } from '@material-ui/core'
 import HomeIcon from '@material-ui/icons/Home'
 import ChevronRightIcon from '@material-ui/icons/ChevronRight'
 import InputIcon from '@material-ui/icons/Input'
-import Autocomplete from '@material-ui/lab/Autocomplete'
-import SearchIcon from '@material-ui/icons/Search'
-import HistoryIcon from '@material-ui/icons/History'
-import CloseIcon from '@material-ui/icons/Close'
-import { concat } from 'lodash'
 
 interface HeaderProps {
     path?: any
 }
-
-const recent = [
-    {
-        bfaiRating: '',
-        date: '2021-01-13',
-        output: 'severe',
-        proper_name: 'Guardant Health, Inc. hihi',
-        rating: 'Guardant Health, Inc. [No Rating]',
-        subscription: 'risk_signals',
-        ticker: 'GH.US',
-        recent: true,
-    },
-    {
-        bfaiRating: '',
-        date: '2020-11-16',
-        output: 'severe',
-        proper_name: 'Inmobiliaria Colonial SOCIMI SA',
-        rating: 'Inmobiliaria Colonial SOCIMI SA [No Rating]',
-        subscription: 'risk_signals',
-        ticker: 'COL.SM',
-        recent: true,
-    },
-    {
-        bfaiRating: '',
-        date: '2020-11-05',
-        output: 'severe',
-        proper_name: 'Eldorado Resorts Inc',
-        rating: 'Eldorado Resorts Inc [No Rating]',
-        subscription: 'risk_signals',
-        ticker: 'ERI.US',
-        recent: true,
-    },
-]
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -108,6 +63,14 @@ const Header = ({ path }: HeaderProps) => {
         localStorage.removeItem('user')
         history.push('/login')
     }
+    const userStr = localStorage.getItem('user')
+    const currentUser = userStr ? JSON.parse(userStr) : null
+    const [fullName, setFullName] = useState<string>('')
+
+    useEffect(() => {
+        setFullName(`${currentUser.firstName} ${currentUser.lastName}`)
+    },[])
+
     return (
         <div className={classes.root}>
             <Breadcrumbs

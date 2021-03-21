@@ -30,6 +30,7 @@ export const createIncident = (dispatch: any) => (
 }
 
 export const searchIncident = (dispatch: any) => (
+    userId: string,
     incidentType: string,
     page: number,
     limit: number,
@@ -37,7 +38,7 @@ export const searchIncident = (dispatch: any) => (
 ) => {
     dispatch({ type: SEARCH_INCIDENT })
     incidentService
-        .searchIncident(incidentType, page, limit, sortedBy)
+        .searchIncident(userId, incidentType, page, limit, sortedBy)
         .then(result => {
             const data = result.rows
             dispatch({

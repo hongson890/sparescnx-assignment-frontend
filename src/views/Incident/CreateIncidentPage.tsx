@@ -26,6 +26,7 @@ import {
 import { Alert } from '../../components/Alert'
 import { IncidentCreatedDTO } from '../../models/IncidentCreatedDTO'
 import { userService } from "../../services/users.services";
+import history from '../../components/History'
 
 const useStyles = makeStyles(theme => ({
     root: {},
@@ -35,13 +36,21 @@ const useStyles = makeStyles(theme => ({
     },
 }))
 
+const userStr = localStorage.getItem('user')
+const user = userStr ? JSON.parse(userStr) : null
+
 const CreateIncidentInst = () => {
     const classes = useStyles()
     const { state, createIncident } = useContext(IncidentContext)
     const [listUser, setListUser] = useState<any[]>([])
 
     useEffect(() => {
-        getAllUser()
+        if (!user || user.role !== 'admin') {
+            history.push('/incident/list')
+            Alert.warning('User is not allowed to create incident')
+        } else {
+            getAllUser()
+        }
     }, [])
 
      const getAllUser = async () => {
